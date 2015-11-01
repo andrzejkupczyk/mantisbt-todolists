@@ -1,0 +1,14 @@
+<?php
+
+$s_plugin_ToDoLists_name = 'Listy zadań';
+$s_plugin_ToDoLists_description = 'Dodaje możliwość tworzenia list zadań.';
+$s_plugin_ToDoLists_configuration = 'Konfiguracja';
+
+$s_plugin_ToDoLists_manage_threshold = 'Zarządzanie';
+$s_plugin_ToDoLists_manage_threshold_desc = 'Tworzenie nowych zadań i zarządzanie nimi';
+$s_plugin_ToDoLists_view_threshold = 'Podgląd';
+
+$s_plugin_ToDoLists_things_to_do = 'Do zrobienia';
+$s_plugin_ToDoLists_add_new_task = 'Dodaj nowe zadanie';
+$s_plugin_ToDoLists_delete_task = 'Usuń zadanie';
+$s_plugin_ToDoLists_delete_confirmation = 'Czy na pewno usunąć niewykonane zadanie?';

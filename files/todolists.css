@@ -1,0 +1,41 @@
+.ToDoLists-form {
+    padding: 0;
+}
+.ToDoLists-form ul, .ToDoLists-form li {
+    margin: 0;
+    padding-left: 0;
+}
+.ToDoLists-form ul {
+    list-style-type: none;
+    margin-bottom: 5px;
+}
+.ToDoLists-form li {
+    line-height: 20px;
+    text-align: justify;
+    position: relative;
+    padding: 0 10px 0 23px;
+}
+.ToDoLists-form input[type="checkbox"] {
+    left: 0;
+    position: absolute;
+}
+.ToDoLists-form label {
+    cursor: pointer;
+}
+.ToDoLists-form a {
+    visibility: hidden;
+}
+.ToDoLists-form li:hover a {
+    visibility: visible;
+}
+.ToDoLists-form a img {
+    vertical-align: top;
+    margin-top: -1px;
+}
+.ToDoLists-form .finished {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    -khtml-opacity: 0.5;
+    opacity: 0.5;
+}

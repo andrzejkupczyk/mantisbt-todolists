@@ -1,0 +1,14 @@
+<?php
+
+$s_plugin_ToDoLists_name = 'To-do lists';
+$s_plugin_ToDoLists_description = 'Adds the ability to create to-do lists.';
+$s_plugin_ToDoLists_configuration = 'Configuration';
+
+$s_plugin_ToDoLists_manage_threshold = 'Manage';
+$s_plugin_ToDoLists_manage_threshold_desc = 'Create and manage own tasks';
+$s_plugin_ToDoLists_view_threshold = 'Preview';
+
+$s_plugin_ToDoLists_things_to_do = 'Things to do';
+$s_plugin_ToDoLists_add_new_task = 'Add nowe task';
+$s_plugin_ToDoLists_delete_task = 'Remove task';
+$s_plugin_ToDoLists_delete_confirmation = 'Are you sure you want to remove unfinished task?';
