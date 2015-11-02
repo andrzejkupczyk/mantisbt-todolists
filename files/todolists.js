@@ -33,7 +33,12 @@
             },
             editTask: function(task, e){
                 e.preventDefault();
-                task.description = prompt(this.lang.titleEditTask, task.description);
+                description = prompt(this.lang.titleEditTask, task.description);
+                
+                if(description != null){
+                    task.description = description;
+                }
+                
                 this.$http.put(this.$el.action, {
                     task: task
                 });
