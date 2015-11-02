@@ -64,8 +64,8 @@ class TasksRepository extends Repository
     public function update($data)
     {
         extract($data);
-        $query = "UPDATE {$this->table} SET finished = " . db_param() . ' WHERE id = ' . db_param();
-        return db_query_bound($query, [$finished, $id]);
+        $query = "UPDATE {$this->table} SET description = " . db_param() . ", finished = " . db_param() . ' WHERE id = ' . db_param();
+        return db_query_bound($query, [$description, $finished, $id]);
     }
 
     /**

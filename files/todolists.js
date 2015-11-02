@@ -31,6 +31,13 @@
                     task.finished = !task.finished;
                 });
             },
+            editTask: function(task, e){
+                e.preventDefault();
+                task.description = prompt(this.lang.titleEditTask, task.description);
+                this.$http.put(this.$el.action, {
+                    task: task
+                });
+            },
             deleteTask: function(task, e) {
                 e.preventDefault();
                 if (!task.finished && !confirm(this.lang.deleteConfirmation)) {
