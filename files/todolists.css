@@ -39,3 +39,7 @@
     -khtml-opacity: 0.5;
     opacity: 0.5;
 }
+.ToDoLists-form .edit-icon{
+    position: relative;
+    top: 4px;
+}
