@@ -1,5 +1,9 @@
 (function() {
 
+    /**
+     * Vuejs's ViewModel for tasks management
+     * @author Andrzej Kupczyk
+     */
     window.ToDoList = new Vue({
         el: '#ToDoLists',
         data: {
@@ -11,9 +15,9 @@
             }
         },
         methods: {
-            addTask: function(e) {
+            insertTask: function(e) {
                 e.preventDefault();
-                if (!this.validate()) {
+                if (!this.validateDescription(this.newTask.description)) {
                     return;
                 }
                 this.$http.post(this.$el.action, {
@@ -23,29 +27,14 @@
                     this.newTask.description = '';
                 });
             },
-            saveTask: function(task) {
-                task.finished = !!task.finished;
-                this.$http.put(this.$el.action, {
-                    task: task
-                }).error(function() {
-                    task.finished = !task.finished;
-                });
-            },
-            editTask: function(task, e){
-                e.preventDefault();
-                description = prompt(this.lang.titleEditTask, task.description);
-                
-                if(description != null){
-                    task.description = description;
-                }
-                
-                this.$http.put(this.$el.action, {
+            updateTask: function(task) {
+                return this.$http.put(this.$el.action, {
                     task: task
                 });
             },
             deleteTask: function(task, e) {
                 e.preventDefault();
-                if (!task.finished && !confirm(this.lang.deleteConfirmation)) {
+                if (!task.finished && !confirm(this.lang.confirmDeletion)) {
                     return;
                 }
                 this.$http.delete(this.$el.action + '&id=' + task.id, {
@@ -54,9 +43,27 @@
                     this.tasks.$remove(task);
                 });
             },
-            validate: function() {
-                var descLength = this.newTask.description.length;
-                return descLength > 0 && descLength <= 120;
+            toggleFinished: function(task) {
+                task.finished = !!task.finished;
+                this.updateTask(task).error(function() {
+                    task.finished = !task.finished;
+                });
+            },
+            changeDescription: function(task, e) {
+                e.preventDefault();
+                var origDesc = task.description,
+                    newDesc = prompt(this.lang.enterNewDescription, task.description);
+                if (!this.validateDescription(newDesc) || newDesc == origDesc) {
+                    return;
+                }
+                task.description = newDesc;
+                this.updateTask(task).error(function() {
+                    task.description = origDesc;
+                });
+            },
+            validateDescription: function(description) {
+                var length = description ? description.length : 0;
+                return length > 0 && length <= 120;
             }
         }
     });
