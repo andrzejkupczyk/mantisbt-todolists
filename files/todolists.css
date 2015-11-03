@@ -13,11 +13,13 @@
     line-height: 20px;
     text-align: justify;
     position: relative;
-    padding: 0 10px 0 23px;
+    padding: 0 10px 0 18px;
 }
 .ToDoLists-form input[type="checkbox"] {
     left: 0;
+    top: 4px;
     position: absolute;
+    margin: 0;
 }
 .ToDoLists-form label {
     cursor: pointer;
@@ -29,8 +31,10 @@
     visibility: visible;
 }
 .ToDoLists-form a img {
-    vertical-align: top;
-    margin-top: -1px;
+    top: 3px;
+    position: relative;
+    height: 16px;
+    border: none;
 }
 .ToDoLists-form .finished {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
@@ -38,8 +42,4 @@
     -moz-opacity: 0.5;
     -khtml-opacity: 0.5;
     opacity: 0.5;
-}
-.ToDoLists-form .edit-icon{
-    position: relative;
-    top: 4px;
 }
