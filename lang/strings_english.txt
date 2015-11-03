@@ -9,8 +9,8 @@ $s_plugin_ToDoLists_manage_threshold_desc = 'Create and manage own tasks';
 $s_plugin_ToDoLists_view_threshold = 'Preview';
 
 $s_plugin_ToDoLists_things_to_do = 'Things to do';
-$s_plugin_ToDoLists_add_new_task = 'Add nowe task';
+$s_plugin_ToDoLists_add_new_task = 'Add new task';
 $s_plugin_ToDoLists_edit_task = 'Edit task';
-$s_plugin_ToDoLists_title_edit_task = 'Enter a new name for the task';
+$s_plugin_ToDoLists_enter_new_description = 'Enter a new description for the task (max 120 chars):';
 $s_plugin_ToDoLists_delete_task = 'Remove task';
-$s_plugin_ToDoLists_delete_confirmation = 'Are you sure you want to remove unfinished task?';
+$s_plugin_ToDoLists_confirm_deletion = 'Are you sure you want to remove unfinished task?';
