@@ -81,6 +81,7 @@ class AjaxRequestHandler
         $this->repository->update([
             'id' => $this->id,
             'finished' => $this->finished,
+            'description' => $this->description,
         ]);
     }
 
