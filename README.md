@@ -6,3 +6,6 @@ Allows users (e.g. developers) to manage to-do tasks within bug report. Uses aja
 - Download or clone the repository and place it under the MantisBT plugins folder.
 - Rename the folder to ToDoLists
 - Go to Manage - Manage Plugins and install the plugin.
+
+## Requirements
+- PHP >=5.4.0
