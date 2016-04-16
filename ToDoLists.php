@@ -9,7 +9,7 @@ require_once 'autoload.php';
  */
 class ToDoListsPlugin extends MantisPlugin
 {
-    const VERSION = '1.1.0';
+    const VERSION = '1.2.0';
 
     /**
      * @var TasksRepository
