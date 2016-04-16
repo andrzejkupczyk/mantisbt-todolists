@@ -12,7 +12,7 @@ access_ensure_global_level(config_get('manage_plugin_threshold'));
 function setOptionIfNeeded($name, $value)
 {
     if ($value != plugin_config_get($name)) {
-        plugin_config_set($name, $p_value);
+        plugin_config_set($name, $value);
     }
 }
 
