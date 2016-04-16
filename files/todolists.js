@@ -7,12 +7,13 @@
     window.ToDoList = new Vue({
         el: '#ToDoLists',
         data: {
-            tasks: [],
             lang: {},
             newTask: {
                 bug_id: 0,
                 description: ''
-            }
+            },
+            readOnly: false,
+            tasks: []
         },
         methods: {
             insertTask: function(e) {
