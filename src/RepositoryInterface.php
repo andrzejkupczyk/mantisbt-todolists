@@ -8,19 +8,20 @@ namespace ToDoLists;
 interface RepositoryInterface
 {
     /**
-     * @param integer $taskId
+     * @param int $taskId
      */
     public function delete($taskId);
 
     /**
-     * @param $query
-     * @param array    $params
+     * @param string $query
+     * @param array  $params
      */
     public function fetch($query, array $params = []);
 
     /**
-     * @param  array           $data
-     * @return array|boolean
+     * @param  array $data
+     *
+     * @return array|bool
      */
     public function insert($data);
 
