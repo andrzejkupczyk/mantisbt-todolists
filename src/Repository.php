@@ -10,18 +10,11 @@ namespace ToDoLists;
 abstract class Repository implements RepositoryInterface
 {
     /**
-     * @param integer $taskId
-     */
-    public function delete($taskId)
-    {
-        //
-    }
-
-    /**
      * Fetches given query.
      *
-     * @param  string  $query
-     * @param  array   $params
+     * @param  string $query
+     * @param  array  $params
+     *
      * @return array
      */
     public function fetch($query, array $params = [])
@@ -36,19 +29,19 @@ abstract class Repository implements RepositoryInterface
     }
 
     /**
-     * @param  array           $data
-     * @return array|boolean
+     * @param int $taskId
      */
-    public function insert($data)
-    {
-        //
-    }
+    abstract public function delete($taskId);
+
+    /**
+     * @param  array $data
+     *
+     * @return array|bool
+     */
+    abstract public function insert($data);
 
     /**
      * @param array $data
      */
-    public function update($data)
-    {
-        //
-    }
+    abstract public function update($data);
 }
