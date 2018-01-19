@@ -7,7 +7,7 @@ namespace ToDoLists;
  *
  * @author Andrzej Kupczyk
  */
-abstract class Repository implements RepositoryInterface
+abstract class Repository
 {
     /**
      * Fetches given query.
