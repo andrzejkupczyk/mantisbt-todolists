@@ -2,6 +2,8 @@
 
 namespace ToDoLists;
 
+use Exception;
+
 /**
  * @author Andrzej Kupczyk
  */
@@ -32,8 +34,10 @@ class AjaxRequestHandler
     }
 
     /**
-     * @param  string  $name
+     * @param  string $name
+     *
      * @return mixed
+     * @throws Exception
      */
     public function __get($name)
     {
