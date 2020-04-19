@@ -7,8 +7,10 @@ $s_plugin_ToDoLists_configuration = 'Konfiguracja';
 $s_plugin_ToDoLists_manage_threshold = 'Zarządzanie';
 $s_plugin_ToDoLists_manage_threshold_desc = 'Tworzenie nowych zadań i zarządzanie nimi';
 $s_plugin_ToDoLists_view_threshold = 'Podgląd';
+$s_plugin_ToDoLists_view_threshold_desc = 'Podgląd zadań stworzonych przez innych';
 
 $s_plugin_ToDoLists_things_to_do = 'Do zrobienia';
+$s_plugin_ToDoLists_add = 'Dodaj';
 $s_plugin_ToDoLists_add_new_task = 'Dodaj nowe zadanie';
 $s_plugin_ToDoLists_edit_task = 'Edytuj zadanie';
 $s_plugin_ToDoLists_enter_new_description = 'Wprowadź nowy opis zadania (maks. 120 znaków):';

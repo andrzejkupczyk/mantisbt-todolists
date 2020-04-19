@@ -1,3 +1,6 @@
+.ToDoLists-counter {
+    font-weight: normal;
+}
 .ToDoLists-form {
     padding: 0;
 }
@@ -7,7 +10,7 @@
 }
 .ToDoLists-form ul {
     list-style-type: none;
-    margin-bottom: 5px;
+    margin-top: 10px;
 }
 .ToDoLists-form li {
     line-height: 20px;
@@ -23,6 +26,7 @@
 }
 .ToDoLists-form label {
     cursor: pointer;
+    font-size: 13px;
 }
 .ToDoLists-form a {
     visibility: hidden;
@@ -30,16 +34,14 @@
 .ToDoLists-form li:hover a {
     visibility: visible;
 }
-.ToDoLists-form a img {
-    top: 3px;
-    position: relative;
-    height: 16px;
-    border: none;
+.ToDoLists-form a {
+    text-decoration: none;
+    cursor: pointer;
 }
 .ToDoLists-form .finished {
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-    filter: alpha(opacity=50);
-    -moz-opacity: 0.5;
-    -khtml-opacity: 0.5;
-    opacity: 0.5;
+    text-decoration: line-through;
+}
+
+[v-cloak] {
+    display: none;
 }

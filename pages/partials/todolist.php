@@ -1,38 +1,74 @@
 <?php
 if (!access_has_global_level(plugin_config_get('view_threshold'))) return;
 ?>
-<tr <?= helper_alternate_class() ?>>
-    <td class="category"><?= plugin_lang_get('things_to_do') ?></td>
-    <td colspan="5">
-        <form id="<?= plugin_get_current() ?>" class="<?= plugin_get_current() ?>-form" action="<?= plugin_page('ajax_page') ?>" method="post">
-            <input v-model="newTask.bug_id" type="hidden" value="<?= $bugId ?>">
-            <ul v-if="tasks.length">
-                <li v-for="task in tasks | orderBy 'finished'" track-by="id">
-                    <label v-bind:class="{'finished': task.finished}">
-                        <input v-on:change="toggleFinished(task)" v-model="task.finished" v-bind:disabled="readOnly" type="checkbox">
-                        <span>{{ task.description }}</span>
-                    </label>
-                    <a v-on:click="changeDescription(task, $event)" v-if="!readOnly" href="#"><img alt="Edit" title="<?= plugin_lang_get('edit_task') ?>" class="edit-icon" src="images/update.png"></a>
-                    <a v-on:click="deleteTask(task, $event)" v-if="!readOnly" href="#"><img alt="X" title="<?= plugin_lang_get('delete_task') ?>" class="delete-icon" src="images/delete.png"></a>
-                </li>
-            </ul>
-            <input v-on:keydown.enter="insertTask" v-model="newTask.description" v-if="!readOnly" type="text" class="<?= plugin_get_current() ?>-add-new" placeholder="<?= plugin_lang_get('add_new_task') ?>" size="40" maxlength="120" />
-        </form>
-        <script type="text/javascript" src="<?= plugin_file('todolists.js') ?>"></script>
-        <script type="text/javascript">
-        ToDoList.$set('readOnly', <?= !access_has_global_level(plugin_config_get('manage_threshold')) ? 'true' : 'false' ?>);
-        ToDoList.$set('lang', {
-            enterNewDescription: "<?= plugin_lang_get('enter_new_description') ?>",
-            confirmDeletion: "<?= plugin_lang_get('confirm_deletion') ?>"
-        });
-        </script>
-        <?php if ($tasks): ?>
-        <?php html_javascript_link('addLoadEvent.js'); ?>
-        <script type="text/javascript">
-        addLoadEvent(function() {
-            this.ToDoList.$set("tasks", <?= json_encode($tasks) ?>);
-        });
-        </script>
-        <?php endif; ?>
-    </td>
+<tr id="<?= plugin_get_current() ?>">
+  <td class="category">
+    <?= plugin_lang_get('things_to_do') ?>
+    <span class="<?= plugin_get_current() ?>-counter" v-cloak>
+      {{ counter }}
+    </span>
+  </td>
+  <td colspan="5">
+    <form
+      class="<?= plugin_get_current() ?>-form form-inline"
+      action="<?= plugin_page('ajax_page') ?>"
+      method="post"
+      @submit.prevent
+    >
+      <input v-model="newTask.bug_id" type="hidden" value="<?= $bugId ?>">
+      <input
+        @keydown.enter.prevent="insertTask"
+        v-model="newTask.description"
+        v-if="!readOnly"
+        type="text"
+        class="<?= plugin_get_current() ?>-add-new input-sm"
+        placeholder="<?= plugin_lang_get('add_new_task') ?>"
+        size="40"
+        maxlength="120"
+      />
+      <button class="btn btn-primary btn-sm btn-white btn-round" @click="insertTask">
+          <?= plugin_lang_get('add') ?>
+      </button>
+      <ul v-if="tasks.length" v-cloak>
+        <li v-for="task in tasks | orderBy 'finished'" track-by="id">
+          <label :class="{finished: task.finished}">
+            <input
+              @change="toggleFinished(task)"
+              v-model="task.finished"
+              :disabled="readOnly"
+              type="checkbox"
+            >
+            <span>{{ task.description }}</span>
+          </label>
+          <a
+            @click="changeDescription(task, $event)"
+            v-if="!readOnly && !task.finished"
+            title="<?= plugin_lang_get('edit_task') ?>"
+          >
+            <i class="fa fa-pencil"></i>
+          </a>
+          <a
+            @click="deleteTask(task, $event)"
+            v-if="!readOnly"
+            title="<?= plugin_lang_get('delete_task') ?>"
+          >
+            <i class="fa fa-trash"></i>
+          </a>
+        </li>
+      </ul>
+    </form>
+    <script type="text/javascript" src="<?= plugin_file('todolists.js') ?>"></script>
+    <script type="text/javascript">
+      ToDoList.$set('readOnly', <?= !access_has_global_level(plugin_config_get('manage_threshold')) ? 'true' : 'false' ?>);
+      ToDoList.$set('lang', {
+        enterNewDescription: "<?= plugin_lang_get('enter_new_description') ?>",
+        confirmDeletion: "<?= plugin_lang_get('confirm_deletion') ?>",
+      });
+      <?php if ($tasks): ?>
+      window.onload = () => {
+        this.ToDoList.$set("tasks", <?= json_encode($tasks) ?>);
+      };
+      <?php endif; ?>
+    </script>
+  </td>
 </tr>

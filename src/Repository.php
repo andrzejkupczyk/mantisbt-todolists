@@ -19,7 +19,7 @@ abstract class Repository
      */
     public function fetch($query, array $params = [])
     {
-        $result = db_query_bound($query, $params);
+        $result = db_query($query, $params);
 
         if (0 == db_num_rows($result)) {
             return [];
