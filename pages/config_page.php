@@ -3,52 +3,72 @@
 auth_reauthenticate();
 access_ensure_global_level(config_get('manage_plugin_threshold'));
 
-$t_manage_threshold = plugin_config_get('manage_threshold');
+layout_page_header(plugin_lang_get('configuration'));
+layout_page_begin('manage_overview_page.php');
 
-html_page_top(plugin_lang_get('name'));
-print_manage_menu();
+print_manage_menu('manage_plugin_page.php');
+
+$t_manage_threshold = plugin_config_get('manage_threshold');
 
 ?>
 
-<br>
-<form action="<?= plugin_page('config_update') ?>" method="post">
-<?= form_security_field('plugin_ToDoLists_config_update') ?>
-<table align="center" class="width50" cellspacing="1">
+  <div class="col-md-12 col-xs-12">
+    <div class="space-10"></div>
+    <div class="form-container">
+      <form action="<?= plugin_page('config_update') ?>" method="post">
+          <?= form_security_field('plugin_ToDoLists_config_update') ?>
+        <div class="widget-box widget-color-blue2">
+          <div class="widget-header widget-header-small">
+            <h4 class="widget-title lighter">
+              <i class="ace-icon fa fa-tasks"></i>
+                <?= plugin_lang_get('name') . ': ' . plugin_lang_get('configuration') ?>
+            </h4>
+          </div>
+          <div class="widget-body">
+            <div class="widget-main no-padding">
+              <div class="table-responsive">
+                <table class="table table-bordered table-condensed table-striped">
 
-<tr>
-<td class="form-title" colspan="2"><?= plugin_lang_get('name') ?>: <?= plugin_lang_get('configuration') ?></td>
-</tr>
+                  <tr>
+                    <th class="category width-50">
+                        <?= plugin_lang_get('manage_threshold') ?><br />
+                      <span class="small"><?= plugin_lang_get('manage_threshold_desc') ?></span>
+                    </th>
+                    <td class="center">
+                      <select name="manage_threshold">
+                          <?php print_enum_string_option_list('access_levels', plugin_config_get('manage_threshold')); ?>
+                      </select>
+                    </td>
+                  </tr>
 
-<tr <?= helper_alternate_class() ?>>
-<td class="category" width="60%">
-    <?= plugin_lang_get('manage_threshold') ?>
-    <br /><span class="small"><?= plugin_lang_get('manage_threshold_desc') ?></span>
-</td>
-<td class="center" width="40%">
-    <select name="manage_threshold">
-    <?php print_enum_string_option_list('access_levels', plugin_config_get('manage_threshold')); ?>
-    </select>
-</td>
-</tr>
+                  <tr>
+                    <th class="category width-50">
+                        <?= plugin_lang_get('view_threshold') ?><br />
+                      <span class="small"><?= plugin_lang_get('view_threshold_desc') ?></span>
+                    </th>
+                    <td class="center">
+                      <select name="view_threshold">
+                          <?php print_enum_string_option_list('access_levels', plugin_config_get('view_threshold')); ?>
+                      </select>
+                    </td>
+                  </tr>
 
-<tr <?= helper_alternate_class() ?>>
-<td class="category" width="60%">
-    <?= plugin_lang_get('view_threshold') ?>
-</td>
-<td class="center" width="40%">
-    <select name="view_threshold">
-    <?php print_enum_string_option_list('access_levels', plugin_config_get('view_threshold')); ?>
-    </select>
-</td>
-</tr>
-
-<tr>
-<td class="center" colspan="2"><input type="submit"/></td>
-</tr>
-
-</table>
-</form>
+                </table>
+              </div>
+            </div>
+            <div class="widget-toolbox padding-8 clearfix">
+              <input
+                type="submit"
+                class="btn btn-primary btn-white btn-round"
+                value="<?= lang_get('change_configuration') ?>"
+              />
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 
 <?php
 
-html_page_bottom();
+layout_page_end();

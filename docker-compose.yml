@@ -1,0 +1,23 @@
+version: '3.6'
+services:
+  mantisbt:
+    image: xlrl/mantisbt
+    ports:
+      - "8080:80"
+    links:
+      - mysql
+    volumes:
+      - ./:/var/www/html/plugins/ToDoLists
+    restart: always
+  mysql:
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=bugtracker
+      - MYSQL_USER=mantisbt
+      - MYSQL_PASSWORD=mantisbt
+    volumes:
+      - mysql:/var/lib/mysql
+    restart: always
+volumes:
+  mysql:

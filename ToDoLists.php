@@ -9,7 +9,7 @@ require_once 'autoload.php';
  */
 class ToDoListsPlugin extends MantisPlugin
 {
-    const VERSION = '1.2.2';
+    const VERSION = '2.0.0';
 
     /**
      * @var ToDoLists\TasksRepository
@@ -23,13 +23,11 @@ class ToDoListsPlugin extends MantisPlugin
         $this->page = 'config_page';
 
         $this->version = self::VERSION;
-        $this->requires = [
-            'MantisCore' => '1.2.0',
-        ];
+        $this->requires = ['MantisCore' => '2.0.0'];
 
         $this->author = 'Andrzej Kupczyk';
         $this->contact = 'kontakt@andrzejkupczyk.pl';
-        $this->url = 'http://andrzejkupczyk.pl';
+        $this->url = 'https://andrzejkupczyk.pl';
     }
 
     public function init()
@@ -50,6 +48,7 @@ class ToDoListsPlugin extends MantisPlugin
         return [
             'EVENT_LAYOUT_RESOURCES' => 'resources',
             'EVENT_VIEW_BUG_DETAILS' => 'display',
+            'EVENT_CORE_HEADERS' => 'cspHeaders',
         ];
     }
 
@@ -91,5 +90,10 @@ class ToDoListsPlugin extends MantisPlugin
         return '<link rel="stylesheet" type="text/css" href="' . plugin_file('todolists.css') . '" />' .
             '<script type="text/javascript" src="' . plugin_file('vue-min.js') . '"></script>' .
             '<script type="text/javascript" src="' . plugin_file('vue-resource-min.js') . '"></script>';
+    }
+
+    public function cspHeaders()
+    {
+        http_csp_add('script-src', "'self' 'unsafe-inline' 'unsafe-eval'");
     }
 }

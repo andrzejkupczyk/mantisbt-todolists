@@ -24,7 +24,7 @@ class TasksRepository extends Repository
     {
         $query = "DELETE FROM {$this->table} WHERE id = " . db_param();
 
-        return db_query_bound($query, [$taskId]);
+        return db_query($query, [$taskId]);
     }
 
     /**
@@ -51,7 +51,7 @@ class TasksRepository extends Repository
     {
         extract($data);
         $query = "INSERT INTO {$this->table} (bug_id, description) VALUES (" . db_param() . ', ' . db_param() . ')';
-        if (!db_query_bound($query, [$bug_id, $description])) {
+        if (!db_query($query, [$bug_id, $description])) {
             return false;
         }
 
@@ -71,7 +71,7 @@ class TasksRepository extends Repository
         extract($data);
         $query = "UPDATE {$this->table} SET description = " . db_param() . ", finished = " . db_param() . ' WHERE id = ' . db_param();
 
-        return db_query_bound($query, [$description, $finished, $id]);
+        return db_query($query, [$description, $finished, $id]);
     }
 
     /**
