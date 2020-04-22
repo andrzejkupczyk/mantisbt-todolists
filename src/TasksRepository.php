@@ -82,7 +82,7 @@ class TasksRepository extends Repository
     protected function castFinishedToBool(array $result = [])
     {
         return array_map(function ($task) {
-            $task['finished'] = (bool) $task['finished'];
+            $task['finished'] = in_array($task['finished'], ['t', '1'], true);
 
             return $task;
         }, $result);
