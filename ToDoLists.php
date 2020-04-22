@@ -9,7 +9,7 @@ require_once 'autoload.php';
  */
 class ToDoListsPlugin extends MantisPlugin
 {
-    const VERSION = '2.0.0';
+    const VERSION = '2.0.1';
 
     /**
      * @var ToDoLists\TasksRepository
@@ -60,7 +60,7 @@ class ToDoListsPlugin extends MantisPlugin
                 'id I UNSIGNED PRIMARY NOTNULL AUTOINCREMENT,
                 bug_id I UNSIGNED NOTNULL DEFAULT \'0\',
                 description C(120) NOTNULL DEFAULT \'\',
-                finished L DEFAULT 0',
+                finished L DEFAULT \'f\'',
                 ['mysql' => 'ENGINE=MyISAM DEFAULT CHARSET=utf8', 'pgsql' => 'WITHOUT OIDS'],
             ]],
             ['CreateIndexSQL', [

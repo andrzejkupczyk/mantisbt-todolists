@@ -19,5 +19,12 @@ services:
     volumes:
       - mysql:/var/lib/mysql
     restart: always
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=mantisbt
+      - POSTGRES_DB=bugtracker
+    restart: always
 volumes:
   mysql:
