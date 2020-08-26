@@ -65,7 +65,7 @@ if (!access_has_global_level(plugin_config_get('view_threshold'))) return;
         confirmDeletion: "<?= plugin_lang_get('confirm_deletion') ?>",
       });
       <?php if ($tasks): ?>
-      window.onload = () => {
+      window.onload = function() {
         this.ToDoList.$set("tasks", <?= json_encode($tasks) ?>);
       };
       <?php endif; ?>
