@@ -5,7 +5,10 @@ namespace ToDoLists;
 use Exception;
 
 /**
- * @author Andrzej Kupczyk
+ * @property int id
+ * @property int bug_id
+ * @property int finished
+ * @property string description
  */
 class AjaxRequestHandler
 {
@@ -29,12 +32,12 @@ class AjaxRequestHandler
      */
     public function __construct($method = null)
     {
-        $this->repository = new TasksRepository;
+        $this->repository = new TasksRepository();
         $this->method = strtolower($method ?: $_SERVER['REQUEST_METHOD']) . 'Request';
     }
 
     /**
-     * @param  string $name
+     * @param string $name
      *
      * @return mixed
      * @throws Exception
@@ -90,7 +93,7 @@ class AjaxRequestHandler
     }
 
     /**
-     * @param mixed   $data
+     * @param mixed $data
      * @param integer $code
      */
     private function sendJSON($data, $code = 200)

@@ -5,8 +5,10 @@ access_ensure_global_level(config_get('manage_plugin_threshold'));
 
 /**
  * Sets plugin config option if value is different from current/default
- * @param  string $name  option name
- * @param  string $value value to set
+ *
+ * @param string $name option name
+ * @param string $value value to set
+ *
  * @return void
  */
 function setOptionIfNeeded($name, $value)

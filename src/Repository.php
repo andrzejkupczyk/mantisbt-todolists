@@ -2,18 +2,13 @@
 
 namespace ToDoLists;
 
-/**
- * Repository base class.
- *
- * @author Andrzej Kupczyk
- */
 abstract class Repository
 {
     /**
      * Fetches given query.
      *
-     * @param  string $query
-     * @param  array  $params
+     * @param string $query
+     * @param array $params
      *
      * @return array
      */
@@ -34,7 +29,7 @@ abstract class Repository
     abstract public function delete($taskId);
 
     /**
-     * @param  array $data
+     * @param array $data
      *
      * @return array|bool
      */
