@@ -2,9 +2,6 @@
 
 namespace ToDoLists;
 
-/**
- * @author Andrzej Kupczyk
- */
 class TasksRepository extends Repository
 {
     /**
@@ -30,7 +27,7 @@ class TasksRepository extends Repository
     /**
      * Finds list by bug id.
      *
-     * @param  int $bugId
+     * @param int $bugId
      *
      * @return array
      */
@@ -43,7 +40,7 @@ class TasksRepository extends Repository
     }
 
     /**
-     * @param  array $data
+     * @param array $data
      *
      * @return array|bool
      */
@@ -59,7 +56,6 @@ class TasksRepository extends Repository
             'id' => db_insert_id($this->table),
             'bug_id' => $bug_id,
             'description' => $description,
-            'finished' => false,
         ];
     }
 
@@ -71,11 +67,11 @@ class TasksRepository extends Repository
         extract($data);
         $query = "UPDATE {$this->table} SET description = " . db_param() . ", finished = " . db_param() . ' WHERE id = ' . db_param();
 
-        return db_query($query, [$description, $finished, $id]);
+        return db_query($query, [$description, (int) $finished, $id]);
     }
 
     /**
-     * @param  array $result
+     * @param array $result
      *
      * @return array
      */

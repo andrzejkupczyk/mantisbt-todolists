@@ -2,14 +2,9 @@
 
 require_once 'autoload.php';
 
-/**
- * To-Do lists Plugin
- *
- * @author Andrzej Kupczyk
- */
 class ToDoListsPlugin extends MantisPlugin
 {
-    const VERSION = '2.0.1';
+    const VERSION = '2.0.2';
 
     /**
      * @var ToDoLists\TasksRepository
@@ -27,12 +22,12 @@ class ToDoListsPlugin extends MantisPlugin
 
         $this->author = 'Andrzej Kupczyk';
         $this->contact = 'kontakt@andrzejkupczyk.pl';
-        $this->url = 'https://andrzejkupczyk.pl';
+        $this->url = 'https://github.com/andrzejkupczyk/mantisbt-todolists';
     }
 
     public function init()
     {
-        $this->repository = new ToDoLists\TasksRepository;
+        $this->repository = new ToDoLists\TasksRepository();
     }
 
     public function config()
@@ -52,6 +47,10 @@ class ToDoListsPlugin extends MantisPlugin
         ];
     }
 
+    /**
+     * @link https://www.mantisbt.org/wiki/doku.php/mantisbt:plugins_overview#schema_management
+     * @link https://adodb.org/dokuwiki/doku.php?id=v5:dictionary:dictionary_index
+     */
     public function schema()
     {
         return [
@@ -60,7 +59,7 @@ class ToDoListsPlugin extends MantisPlugin
                 'id I UNSIGNED PRIMARY NOTNULL AUTOINCREMENT,
                 bug_id I UNSIGNED NOTNULL DEFAULT \'0\',
                 description C(120) NOTNULL DEFAULT \'\',
-                finished L DEFAULT \'f\'',
+                finished I2 DEFAULT \'0\'',
                 ['mysql' => 'ENGINE=MyISAM DEFAULT CHARSET=utf8', 'pgsql' => 'WITHOUT OIDS'],
             ]],
             ['CreateIndexSQL', [
