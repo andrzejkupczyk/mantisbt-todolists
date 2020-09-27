@@ -1,10 +1,11 @@
 # To-Do Lists
-To-Do Lists Plugin for [Mantis BugTracker](https://www.mantisbt.org/). Allows users (e.g. developers) to manage to-do tasks within a bug report.
+To-Do Lists Plugin for [Mantis BugTracker](https://www.mantisbt.org/). 
+Allows users (e.g. developers) to manage to-do tasks within a bug report.
 
-|MantisBT|Plugin|
-|---|---|
-|v2.0.x|[v2.0.0](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/tag/v2.0.0)|
-|v1.2.x|[v1.2.2](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/tag/v1.2.2)|
+MantisBT | Plugin
+---------|-------------------------------------------------------------------------------
+v2.0.x   | [v2](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/tag/v2.0.2)
+v1.2.x   | [v1](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/tag/v1.2.2)
 
 ## Install
 - Download or clone the repository and place it under the MantisBT plugins folder.
