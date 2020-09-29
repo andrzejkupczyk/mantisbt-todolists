@@ -1,7 +1,7 @@
 <?php
 
 auth_reauthenticate();
-access_ensure_global_level(config_get('manage_plugin_threshold'));
+access_ensure_project_level(config_get('manage_plugin_threshold'));
 
 layout_page_header(plugin_lang_get('configuration'));
 layout_page_begin('manage_overview_page.php');

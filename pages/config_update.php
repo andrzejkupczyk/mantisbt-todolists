@@ -1,7 +1,7 @@
 <?php
 
 form_security_validate('plugin_ToDoLists_config_update');
-access_ensure_global_level(config_get('manage_plugin_threshold'));
+access_ensure_project_level(config_get('manage_plugin_threshold'));
 
 /**
  * Sets plugin config option if value is different from current/default
