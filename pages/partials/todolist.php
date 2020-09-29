@@ -1,5 +1,5 @@
 <?php
-if (!access_has_global_level(plugin_config_get('view_threshold'))) return;
+if (!access_has_project_level(plugin_config_get('view_threshold'))) return;
 ?>
 <tr id="<?= plugin_get_current() ?>">
   <td class="category">
@@ -59,7 +59,7 @@ if (!access_has_global_level(plugin_config_get('view_threshold'))) return;
     </form>
     <script type="text/javascript" src="<?= plugin_file('todolists.js') ?>"></script>
     <script type="text/javascript">
-      ToDoList.$set('readOnly', <?= !access_has_global_level(plugin_config_get('manage_threshold')) ? 'true' : 'false' ?>);
+      ToDoList.$set('readOnly', <?= !access_has_project_level(plugin_config_get('manage_threshold')) ? 'true' : 'false' ?>);
       ToDoList.$set('lang', {
         enterNewDescription: "<?= plugin_lang_get('enter_new_description') ?>",
         confirmDeletion: "<?= plugin_lang_get('confirm_deletion') ?>",

@@ -4,7 +4,7 @@ require_once 'autoload.php';
 
 class ToDoListsPlugin extends MantisPlugin
 {
-    const VERSION = '2.0.2';
+    const VERSION = '2.0.3';
 
     /**
      * @var ToDoLists\TasksRepository
