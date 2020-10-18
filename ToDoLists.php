@@ -1,10 +1,10 @@
 <?php
 
-require_once 'autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
 class ToDoListsPlugin extends MantisPlugin
 {
-    const VERSION = '2.0.3';
+    const VERSION = '2.0.4';
 
     /**
      * @var ToDoLists\TasksRepository
@@ -71,7 +71,7 @@ class ToDoListsPlugin extends MantisPlugin
     }
 
     /**
-     * @param string  $event
+     * @param string $event
      * @param integer $bugId
      */
     public function display($event, $bugId)
@@ -81,7 +81,8 @@ class ToDoListsPlugin extends MantisPlugin
     }
 
     /**
-     * @param  string   $event
+     * @param string $event
+     *
      * @return string
      */
     public function resources($event)

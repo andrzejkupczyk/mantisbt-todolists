@@ -1,0 +1,28 @@
+{
+    "name": "andrzejkupczyk/mantis-todolists",
+    "description": "To-Do Lists Plugin for Mantis Bug Tracker",
+    "type": "mantisbt-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrzej Kupczyk",
+            "email": "kontakt@andrzejkupczyk.pl"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/andrzejkupczyk/mantis-todolists/issues"
+    },
+    "autoload": {
+        "psr-4": {
+            "ToDoLists\\": "src"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
+    }
+}
