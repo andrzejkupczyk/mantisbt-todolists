@@ -16,16 +16,14 @@ if (!access_has_project_level(plugin_config_get('view_threshold'))) return;
       @submit.prevent
     >
       <input v-model="newTask.bug_id" type="hidden" value="<?= $bugId ?>">
-      <input
+      <textarea
         @keydown.enter.prevent="insertTask"
         v-model="newTask.description"
         v-if="!readOnly"
-        type="text"
+        rows="1"
         class="<?= plugin_get_current() ?>-add-new input-sm"
         placeholder="<?= plugin_lang_get('add_new_task') ?>"
-        size="40"
-        maxlength="120"
-      />
+      ></textarea>
       <button class="btn btn-primary btn-sm btn-white btn-round" @click="insertTask">
           <?= plugin_lang_get('add') ?>
       </button>
