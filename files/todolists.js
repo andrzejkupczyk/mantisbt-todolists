@@ -1,9 +1,5 @@
 (() => {
 
-  /**
-   * Vuejs's ViewModel for tasks management
-   * @author Andrzej Kupczyk
-   */
   window.ToDoList = new Vue({
     el: '#ToDoLists',
     data: {

@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'ToDoLists\\' => array($baseDir . '/src'),
+    'Mantis\\ToDoLists\\' => array($baseDir . '/src'),
 );

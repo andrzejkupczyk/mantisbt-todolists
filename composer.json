@@ -12,9 +12,13 @@
     "support": {
         "issues": "https://github.com/andrzejkupczyk/mantis-todolists/issues"
     },
+    "require": {
+        "php": ">=5.5.0",
+        "ext-json": "*"
+    },
     "autoload": {
         "psr-4": {
-            "ToDoLists\\": "src"
+            "Mantis\\ToDoLists\\": "src"
         }
     },
     "config": {
@@ -22,7 +26,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0-dev"
+            "dev-master": "2.1-dev"
         }
     }
 }
