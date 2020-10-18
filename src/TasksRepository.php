@@ -1,9 +1,11 @@
 <?php
 
-namespace ToDoLists;
+namespace Mantis\ToDoLists;
 
-class TasksRepository extends Repository
+class TasksRepository
 {
+    const TABLE_NAME = 'tasks';
+
     /**
      * @var string
      */
@@ -11,11 +13,13 @@ class TasksRepository extends Repository
 
     public function __construct()
     {
-        $this->table = plugin_table('tasks');
+        $this->table = plugin_table(self::TABLE_NAME);
     }
 
     /**
-     * @param integer $taskId
+     * @param int $taskId
+     *
+     * @return \IteratorAggregate|boolean
      */
     public function delete($taskId)
     {
@@ -25,8 +29,23 @@ class TasksRepository extends Repository
     }
 
     /**
-     * Finds list by bug id.
+     * @param string $query
+     * @param array $params
      *
+     * @return array
+     */
+    public function fetch($query, array $params = [])
+    {
+        $result = db_query($query, $params);
+
+        if (db_num_rows($result) === 0) {
+            return [];
+        }
+
+        return $result->GetArray();
+    }
+
+    /**
      * @param int $bugId
      *
      * @return array
@@ -61,6 +80,8 @@ class TasksRepository extends Repository
 
     /**
      * @param array $data
+     *
+     * @return \IteratorAggregate|boolean
      */
     public function update($data)
     {

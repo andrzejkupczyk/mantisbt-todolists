@@ -2,12 +2,14 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
+use Mantis\ToDoLists\TasksRepository;
+
 class ToDoListsPlugin extends MantisPlugin
 {
-    const VERSION = '2.0.4';
+    const VERSION = '2.1.0';
 
     /**
-     * @var ToDoLists\TasksRepository
+     * @var Mantis\ToDoLists\TasksRepository
      */
     protected $repository;
 
@@ -22,12 +24,12 @@ class ToDoListsPlugin extends MantisPlugin
 
         $this->author = 'Andrzej Kupczyk';
         $this->contact = 'kontakt@andrzejkupczyk.pl';
-        $this->url = 'https://github.com/andrzejkupczyk/mantisbt-todolists';
+        $this->url = 'https://github.com/andrzejkupczyk/mantis-todolists';
     }
 
     public function init()
     {
-        $this->repository = new ToDoLists\TasksRepository();
+        $this->repository = new TasksRepository();
     }
 
     public function config()
@@ -53,9 +55,11 @@ class ToDoListsPlugin extends MantisPlugin
      */
     public function schema()
     {
+        $tableName = plugin_table(TasksRepository::TABLE_NAME);
+
         return [
             ['CreateTableSQL', [
-                plugin_table('tasks'),
+                $tableName,
                 'id I UNSIGNED PRIMARY NOTNULL AUTOINCREMENT,
                 bug_id I UNSIGNED NOTNULL DEFAULT \'0\',
                 description C(120) NOTNULL DEFAULT \'\',
@@ -64,7 +68,7 @@ class ToDoListsPlugin extends MantisPlugin
             ]],
             ['CreateIndexSQL', [
                 'idx_tasks_bug_id',
-                plugin_table('tasks'),
+                $tableName,
                 'bug_id',
             ]],
         ];

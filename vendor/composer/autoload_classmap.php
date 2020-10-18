@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'ToDoLists\\AjaxRequestHandler' => $baseDir . '/src/AjaxRequestHandler.php',
-    'ToDoLists\\Repository' => $baseDir . '/src/Repository.php',
-    'ToDoLists\\TasksRepository' => $baseDir . '/src/TasksRepository.php',
+    'Mantis\\ToDoLists\\AjaxRequestHandler' => $baseDir . '/src/AjaxRequestHandler.php',
+    'Mantis\\ToDoLists\\TasksRepository' => $baseDir . '/src/TasksRepository.php',
 );

@@ -4,34 +4,33 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitdde9d088ce6b1edc191dba49b598ae9e
+class ComposerStaticInitc5ea70368e543c8b00ac548197d65048
 {
     public static $prefixLengthsPsr4 = array (
-        'T' => 
+        'M' => 
         array (
-            'ToDoLists\\' => 10,
+            'Mantis\\ToDoLists\\' => 17,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'ToDoLists\\' => 
+        'Mantis\\ToDoLists\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
     );
 
     public static $classMap = array (
-        'ToDoLists\\AjaxRequestHandler' => __DIR__ . '/../..' . '/src/AjaxRequestHandler.php',
-        'ToDoLists\\Repository' => __DIR__ . '/../..' . '/src/Repository.php',
-        'ToDoLists\\TasksRepository' => __DIR__ . '/../..' . '/src/TasksRepository.php',
+        'Mantis\\ToDoLists\\AjaxRequestHandler' => __DIR__ . '/../..' . '/src/AjaxRequestHandler.php',
+        'Mantis\\ToDoLists\\TasksRepository' => __DIR__ . '/../..' . '/src/TasksRepository.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitdde9d088ce6b1edc191dba49b598ae9e::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitdde9d088ce6b1edc191dba49b598ae9e::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitdde9d088ce6b1edc191dba49b598ae9e::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitc5ea70368e543c8b00ac548197d65048::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitc5ea70368e543c8b00ac548197d65048::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitc5ea70368e543c8b00ac548197d65048::$classMap;
 
         }, null, ClassLoader::class);
     }

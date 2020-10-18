@@ -1,6 +1,6 @@
 <?php
 
-namespace ToDoLists;
+namespace Mantis\ToDoLists;
 
 use Exception;
 
@@ -18,29 +18,23 @@ class AjaxRequestHandler
     protected $data;
 
     /**
-     * @var string
-     */
-    protected $method;
-
-    /**
-     * @var TasksRepository
+     * @var \Mantis\ToDoLists\TasksRepository
      */
     protected $repository;
 
     /**
-     * @param string $method
+     * @param \Mantis\ToDoLists\TasksRepository $repository
      */
-    public function __construct($method = null)
+    public function __construct($repository)
     {
-        $this->repository = new TasksRepository();
-        $this->method = strtolower($method ?: $_SERVER['REQUEST_METHOD']) . 'Request';
+        $this->repository = $repository;
     }
 
     /**
      * @param string $name
      *
      * @return mixed
-     * @throws Exception
+     * @throws \Exception
      */
     public function __get($name)
     {
@@ -55,17 +49,19 @@ class AjaxRequestHandler
 
     public function handle()
     {
+        $method = $_SERVER['REQUEST_METHOD'] . 'Request';
+
         try {
-            if (!method_exists($this, $this->method)) {
-                throw new Exception();
+            if (!method_exists($this, $method)) {
+                throw new Exception("Method {$_SERVER['REQUEST_METHOD']} not allowed", 405);
             }
             if (!$data = file_get_contents('php://input')) {
                 throw new Exception();
             }
             $this->data = json_decode($data, true);
-            call_user_func([$this, $this->method]);
+            call_user_func([$this, $method]);
         } catch (Exception $e) {
-            $this->sendJSON($e->getMessage(), 400);
+            $this->sendJSON($e->getMessage(), $e->getCode() ?: 400);
         }
     }
 
@@ -80,6 +76,7 @@ class AjaxRequestHandler
             'bug_id' => $this->bug_id,
             'description' => $this->description,
         ]);
+
         $this->sendJSON($task);
     }
 
@@ -94,7 +91,7 @@ class AjaxRequestHandler
 
     /**
      * @param mixed $data
-     * @param integer $code
+     * @param int $code
      */
     private function sendJSON($data, $code = 200)
     {
