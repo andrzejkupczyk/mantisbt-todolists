@@ -31,7 +31,7 @@
         }
 
         this.$http.post(this.action, { task: this.newTask }, (response) => {
-          this.tasks.push(response);
+          this.tasks.push(...response);
           this.newTask.description = '';
         });
       },
@@ -70,9 +70,7 @@
         });
       },
       validateDescription(description) {
-        const length = description ? description.length : 0;
-
-        return length > 0 && length <= 120;
+        return (description ? description.length : 0) > 0;
       },
     },
   });

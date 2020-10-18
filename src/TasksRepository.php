@@ -74,6 +74,7 @@ class TasksRepository
         return [
             'id' => db_insert_id($this->table),
             'bug_id' => $bug_id,
+            'finished' => false,
             'description' => $description,
         ];
     }

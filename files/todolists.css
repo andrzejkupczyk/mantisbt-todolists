@@ -41,6 +41,11 @@
 .ToDoLists-form .finished {
     text-decoration: line-through;
 }
+.ToDoLists-add-new {
+    resize: none;
+    overflow: hidden;
+    overflow-wrap: break-word;
+}
 
 [v-cloak] {
     display: none;
