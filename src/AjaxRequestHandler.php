@@ -43,7 +43,7 @@ class AjaxRequestHandler
         } elseif (isset($this->data[$name])) {
             return $this->data[$name];
         } else {
-            throw new Exception();
+            throw new Exception("Property {$name} is undefined");
         }
     }
 
@@ -72,12 +72,17 @@ class AjaxRequestHandler
 
     protected function postRequest()
     {
-        $task = $this->repository->insert([
-            'bug_id' => $this->bug_id,
-            'description' => $this->description,
-        ]);
+        $tasksToAdd = array_filter(explode(PHP_EOL, $this->description));
+        $tasksAdded = [];
 
-        $this->sendJSON($task);
+        foreach ($tasksToAdd as $description) {
+            $tasksAdded[] = $this->repository->insert([
+                'bug_id' => $this->bug_id,
+                'description' => $description,
+            ]);
+        }
+
+        $this->sendJSON($tasksAdded);
     }
 
     protected function putRequest()
