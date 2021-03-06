@@ -2,14 +2,14 @@
 
   window.ToDoList = new Vue({
     el: '#ToDoLists',
+    props: ['currentTasks', 'isReadonly', 'translations'],
     data: {
-      lang: {},
       newTask: {
         bug_id: 0,
         description: '',
       },
-      readOnly: false,
       tasks: [],
+      lang: undefined
     },
     computed: {
       action() {
@@ -30,13 +30,13 @@
           return;
         }
 
-        this.$http.post(this.action, { task: this.newTask }, (response) => {
+        this.$http.post(this.action, {task: this.newTask}, (response) => {
           this.tasks.push(...response);
           this.newTask.description = '';
         });
       },
       updateTask(task) {
-        return this.$http.put(this.action, { task: task });
+        return this.$http.put(this.action, {task: task});
       },
       deleteTask(task) {
         if (!task.finished && !confirm(this.lang.confirmDeletion)) {
@@ -44,7 +44,7 @@
         }
 
         this.$http.delete(
-          this.action + '&id=' + task.id, { id: task.id },
+          this.action + '&id=' + task.id, {id: task.id},
           () => this.tasks.$remove(task),
         );
       },
@@ -72,6 +72,10 @@
       validateDescription(description) {
         return (description ? description.length : 0) > 0;
       },
+    },
+    created() {
+      this.tasks = JSON.parse(this.currentTasks);
+      this.lang = JSON.parse(this.translations);
     },
   });
 

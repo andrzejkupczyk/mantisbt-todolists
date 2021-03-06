@@ -1,7 +1,15 @@
 <?php
 if (!access_has_project_level(plugin_config_get('view_threshold'))) return;
 ?>
-<tr id="<?= plugin_get_current() ?>">
+<tr
+  id="<?= plugin_get_current() ?>"
+  :is-readonly="<?= !access_has_project_level(plugin_config_get('manage_threshold')) ? 'true' : 'false' ?>"
+  current-tasks="<?= string_attribute(json_encode($tasks)) ?>"
+  translations="<?= string_attribute(json_encode([
+    'enterNewDescription' => plugin_lang_get('enter_new_description'),
+    'confirmDeletion' => plugin_lang_get('confirm_deletion'),
+  ])) ?>"
+>
   <td class="category">
     <?= plugin_lang_get('things_to_do') ?>
     <span class="<?= plugin_get_current() ?>-counter" v-cloak>
@@ -19,13 +27,13 @@ if (!access_has_project_level(plugin_config_get('view_threshold'))) return;
       <textarea
         @keydown.enter.prevent="insertTask"
         v-model="newTask.description"
-        v-if="!readOnly"
+        v-if="!isReadonly"
         rows="1"
         class="<?= plugin_get_current() ?>-add-new input-sm"
         placeholder="<?= plugin_lang_get('add_new_task') ?>"
       ></textarea>
-      <button class="btn btn-primary btn-sm btn-white btn-round" @click="insertTask">
-          <?= plugin_lang_get('add') ?>
+      <button class="btn btn-primary btn-sm btn-white btn-round" @click="insertTask" v-if="!isReadonly">
+        <?= plugin_lang_get('add') ?>
       </button>
       <ul v-if="tasks.length" v-cloak>
         <li v-for="task in tasks | orderBy 'finished'" track-by="id">
@@ -33,21 +41,21 @@ if (!access_has_project_level(plugin_config_get('view_threshold'))) return;
             <input
               @change="toggleFinished(task)"
               v-model="task.finished"
-              :disabled="readOnly"
+              :disabled="isReadonly"
               type="checkbox"
             >
             <span>{{ task.description }}</span>
           </label>
           <a
             @click="changeDescription(task, $event)"
-            v-if="!readOnly && !task.finished"
+            v-if="!isReadonly && !task.finished"
             title="<?= plugin_lang_get('edit_task') ?>"
           >
             <i class="fa fa-pencil"></i>
           </a>
           <a
             @click="deleteTask(task, $event)"
-            v-if="!readOnly"
+            v-if="!isReadonly"
             title="<?= plugin_lang_get('delete_task') ?>"
           >
             <i class="fa fa-trash"></i>
@@ -56,17 +64,5 @@ if (!access_has_project_level(plugin_config_get('view_threshold'))) return;
       </ul>
     </form>
     <script type="text/javascript" src="<?= plugin_file('todolists.js') ?>"></script>
-    <script type="text/javascript">
-      ToDoList.$set('readOnly', <?= !access_has_project_level(plugin_config_get('manage_threshold')) ? 'true' : 'false' ?>);
-      ToDoList.$set('lang', {
-        enterNewDescription: "<?= plugin_lang_get('enter_new_description') ?>",
-        confirmDeletion: "<?= plugin_lang_get('confirm_deletion') ?>",
-      });
-      <?php if ($tasks): ?>
-      window.onload = function () {
-        this.ToDoList.$set("tasks", <?= json_encode($tasks) ?>);
-      };
-      <?php endif; ?>
-    </script>
   </td>
 </tr>

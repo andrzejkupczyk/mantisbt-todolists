@@ -6,7 +6,7 @@ use Mantis\ToDoLists\TasksRepository;
 
 class ToDoListsPlugin extends MantisPlugin
 {
-    const VERSION = '2.1.0';
+    const VERSION = '2.2.0';
 
     /**
      * @var Mantis\ToDoLists\TasksRepository
@@ -98,6 +98,6 @@ class ToDoListsPlugin extends MantisPlugin
 
     public function cspHeaders()
     {
-        http_csp_add('script-src', "'self' 'unsafe-inline' 'unsafe-eval'");
+        http_csp_add('script-src', "'unsafe-eval'");
     }
 }
