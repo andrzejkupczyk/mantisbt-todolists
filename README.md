@@ -5,8 +5,8 @@ Allows users (e.g. developers) to manage to-do tasks within a bug report.
 
 MantisBT | Plugin
 ---------|-------------------------------------------------------------------------------
-v2.0.x   | [v2](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/latest)
-v1.2.x   | [v1](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/tag/v1.2.2)
+v2.x     | [v2](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/latest)
+v1.3.x   | [v1](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/tag/v1.2.2)
 
 ## Install
 
