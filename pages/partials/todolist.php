@@ -65,6 +65,6 @@ if (!access_has_project_level(plugin_config_get('view_threshold'))) {
         </li>
       </ul>
     </form>
-    <script type="text/javascript" src="<?= plugin_file('todolists.js') ?>"></script>
+    <script type="text/javascript" src="<?= plugin_file('todolists.min.js') ?>"></script>
   </td>
 </tr>

@@ -39,7 +39,7 @@
         return this.$http.put(this.action, {task: task});
       },
       deleteTask(task) {
-        if (!task.finished && !confirm(this.lang.confirmDeletion)) {
+        if (!task.finished && !confirm(this.lang?.confirmDeletion)) {
           return;
         }
 
@@ -57,7 +57,7 @@
       },
       changeDescription(task) {
         const origDesc = task.description;
-        const newDesc = prompt(this.lang.enterNewDescription, task.description);
+        const newDesc = prompt(this.lang?.enterNewDescription, task.description);
 
         if (!this.validateDescription(newDesc) || newDesc === origDesc) {
           return;
@@ -74,8 +74,8 @@
       },
     },
     created() {
-      this.tasks = JSON.parse(this.currentTasks);
-      this.lang = JSON.parse(this.translations);
+      this.tasks = JSON.parse(this?.currentTasks);
+      this.lang = JSON.parse(this?.translations);
     },
   });
 

@@ -1,0 +1,13 @@
+{
+  "name": "@andrzejkupczyk/mantis-todolists",
+  "scripts": {
+    "build": "babel files/todolists.js -d files --out-file-extension .min.js",
+    "watch": "npm run build -- --watch"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
+    "@babel/preset-env": "^7.14.8",
+    "babel-preset-minify": "^0.5.1"
+  }
+}
