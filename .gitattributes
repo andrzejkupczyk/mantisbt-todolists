@@ -3,5 +3,9 @@
 .php_cs.dist        export-ignore
 /.github            export-ignore
 /.phive             export-ignore
+/src/todolists.js   export-ignore
+babel.config.json
 composer.json       export-ignore
 docker-compose.yml  export-ignore
+package-lock.json   export-ignore
+package.json        export-ignore

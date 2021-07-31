@@ -2,6 +2,7 @@
 !/vendor/composer
 .php_cs.cache
 /.idea
+/node_modules
 /tools
 /vendor/*
 composer.lock
