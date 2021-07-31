@@ -70,16 +70,16 @@ class AjaxRequestHandler
     protected function postRequest()
     {
         $tasksToAdd = array_filter(explode(PHP_EOL, $this->description));
-        $tasksAdded = [];
+        $addedTasks = [];
 
         foreach ($tasksToAdd as $description) {
-            $tasksAdded[] = $this->repository->insert([
+            $addedTasks[] = $this->repository->insert([
                 'bug_id' => $this->bug_id,
                 'description' => $description,
             ]);
         }
 
-        $this->sendJSON($tasksAdded);
+        $this->sendJSON(array_filter($addedTasks));
     }
 
     protected function putRequest()
