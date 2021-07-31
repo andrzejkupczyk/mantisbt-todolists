@@ -1,5 +1,7 @@
-/.idea
-/vendor/*
-!/vendor/composer
 !/vendor/autoload.php
+!/vendor/composer
+.php_cs.cache
+/.idea
+/tools
+/vendor/*
 composer.lock

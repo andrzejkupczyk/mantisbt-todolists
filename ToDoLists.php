@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 require __DIR__ . '/vendor/autoload.php';
 
 use Mantis\ToDoLists\TasksRepository;
@@ -32,7 +34,7 @@ class ToDoListsPlugin extends MantisPlugin
         $this->repository = new TasksRepository();
     }
 
-    public function config()
+    public function config(): array
     {
         return [
             'manage_threshold' => DEVELOPER,
@@ -40,7 +42,7 @@ class ToDoListsPlugin extends MantisPlugin
         ];
     }
 
-    public function hooks()
+    public function hooks(): array
     {
         return [
             'EVENT_LAYOUT_RESOURCES' => 'resources',
@@ -53,7 +55,7 @@ class ToDoListsPlugin extends MantisPlugin
      * @link https://www.mantisbt.org/wiki/doku.php/mantisbt:plugins_overview#schema_management
      * @link https://adodb.org/dokuwiki/doku.php?id=v5:dictionary:dictionary_index
      */
-    public function schema()
+    public function schema(): array
     {
         $tableName = plugin_table(TasksRepository::TABLE_NAME);
 
@@ -74,22 +76,13 @@ class ToDoListsPlugin extends MantisPlugin
         ];
     }
 
-    /**
-     * @param string $event
-     * @param integer $bugId
-     */
-    public function display($event, $bugId)
+    public function display(string $event, int $bugId)
     {
         $tasks = $this->repository->findByBug($bugId);
         include_once 'pages/partials/todolist.php';
     }
 
-    /**
-     * @param string $event
-     *
-     * @return string
-     */
-    public function resources($event)
+    public function resources(string $event): string
     {
         return '<link rel="stylesheet" type="text/css" href="' . plugin_file('todolists.css') . '" />' .
             '<script type="text/javascript" src="' . plugin_file('vue-min.js') . '"></script>' .

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mantis\ToDoLists;
 
 use Exception;
@@ -22,28 +24,23 @@ class AjaxRequestHandler
      */
     protected $repository;
 
-    /**
-     * @param \Mantis\ToDoLists\TasksRepository $repository
-     */
-    public function __construct($repository)
+    public function __construct(TasksRepository $repository)
     {
         $this->repository = $repository;
     }
 
     /**
-     * @param string $name
-     *
      * @return mixed
      * @throws \Exception
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         if (isset($this->data['task'][$name])) {
             return $this->data['task'][$name];
         } elseif (isset($this->data[$name])) {
             return $this->data[$name];
         } else {
-            throw new Exception("Property {$name} is undefined");
+            throw new Exception("Property $name is undefined");
         }
     }
 
@@ -96,9 +93,8 @@ class AjaxRequestHandler
 
     /**
      * @param mixed $data
-     * @param int $code
      */
-    private function sendJSON($data, $code = 200)
+    private function sendJSON($data, int $code = 200)
     {
         header('Content-Type: application/json');
         http_response_code($code);

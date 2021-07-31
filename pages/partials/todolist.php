@@ -1,5 +1,7 @@
-<?php
-if (!access_has_project_level(plugin_config_get('view_threshold'))) return;
+<?php declare(strict_types=1);
+if (!access_has_project_level(plugin_config_get('view_threshold'))) {
+    return;
+}
 ?>
 <tr
   id="<?= plugin_get_current() ?>"

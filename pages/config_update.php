@@ -1,17 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 form_security_validate('plugin_ToDoLists_config_update');
 access_ensure_project_level(config_get('manage_plugin_threshold'));
 
 /**
  * Sets plugin config option if value is different from current/default
  *
- * @param string $name option name
- * @param string $value value to set
- *
  * @return void
  */
-function setOptionIfNeeded($name, $value)
+function setOptionIfNeeded(string $name, $value)
 {
     if ($value != plugin_config_get($name)) {
         plugin_config_set($name, $value);

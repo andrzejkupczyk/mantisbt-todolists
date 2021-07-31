@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Mantis\ToDoLists\AjaxRequestHandler;
 use Mantis\ToDoLists\TasksRepository;
 
