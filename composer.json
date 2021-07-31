@@ -13,7 +13,7 @@
         "issues": "https://github.com/andrzejkupczyk/mantis-todolists/issues"
     },
     "require": {
-        "php": ">=5.5.0",
+        "php": "^7.0 || ^8.0",
         "ext-json": "*"
     },
     "autoload": {
@@ -26,7 +26,10 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.1-dev"
+            "dev-master": "3.0-dev"
+        },
+        "platform": {
+            "php": "7.0"
         }
     }
 }

@@ -36,20 +36,31 @@ $t_manage_threshold = plugin_config_get('manage_threshold');
                     </th>
                     <td class="center">
                       <select name="manage_threshold">
-                          <?php print_enum_string_option_list('access_levels', plugin_config_get('manage_threshold')); ?>
+                        <?php print_enum_string_option_list('access_levels', plugin_config_get('manage_threshold')); ?>
                       </select>
                     </td>
                   </tr>
 
                   <tr>
                     <th class="category width-50">
-                        <?= plugin_lang_get('view_threshold') ?><br />
+                      <?= plugin_lang_get('view_threshold') ?><br />
                       <span class="small"><?= plugin_lang_get('view_threshold_desc') ?></span>
                     </th>
                     <td class="center">
                       <select name="view_threshold">
-                          <?php print_enum_string_option_list('access_levels', plugin_config_get('view_threshold')); ?>
+                        <?php print_enum_string_option_list('access_levels', plugin_config_get('view_threshold')); ?>
                       </select>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th class="category width-50">
+                      Szablony
+                    </th>
+                    <td class="center">
+                        <select id="category_id" name="category_id" class="autofocus input-sm required">
+                          <?php print_category_option_list(); ?>
+                        </select>
                     </td>
                   </tr>
 

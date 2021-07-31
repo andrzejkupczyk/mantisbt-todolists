@@ -21,6 +21,7 @@ class ComposerStaticInitc5ea70368e543c8b00ac548197d65048
     );
 
     public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Mantis\\ToDoLists\\AjaxRequestHandler' => __DIR__ . '/../..' . '/src/AjaxRequestHandler.php',
         'Mantis\\ToDoLists\\TasksRepository' => __DIR__ . '/../..' . '/src/TasksRepository.php',
     );

@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'Mantis\\ToDoLists\\AjaxRequestHandler' => $baseDir . '/src/AjaxRequestHandler.php',
     'Mantis\\ToDoLists\\TasksRepository' => $baseDir . '/src/TasksRepository.php',
 );
