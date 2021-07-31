@@ -27,26 +27,24 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => 'dev-master',
-    'version' => 'dev-master',
+    'pretty_version' => 'dev-develop',
+    'version' => 'dev-develop',
     'aliases' => 
     array (
-      0 => '3.0.x-dev',
     ),
-    'reference' => '9690696bcf5434422e7256713bbe52f9f6e6864d',
+    'reference' => '8c09125d4da0a975224a28382c76ac9781666f5e',
     'name' => 'andrzejkupczyk/mantis-todolists',
   ),
   'versions' => 
   array (
     'andrzejkupczyk/mantis-todolists' => 
     array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
+      'pretty_version' => 'dev-develop',
+      'version' => 'dev-develop',
       'aliases' => 
       array (
-        0 => '3.0.x-dev',
       ),
-      'reference' => '9690696bcf5434422e7256713bbe52f9f6e6864d',
+      'reference' => '8c09125d4da0a975224a28382c76ac9781666f5e',
     ),
   ),
 );

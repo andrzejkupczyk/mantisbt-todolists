@@ -12,9 +12,22 @@
     "support": {
         "issues": "https://github.com/andrzejkupczyk/mantis-todolists/issues"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/mantisbt/mantisbt"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/mantisbt/securimage"
+        }
+    ],
     "require": {
         "php": "^7.0 || ^8.0",
         "ext-json": "*"
+    },
+    "require-dev": {
+        "mantisbt/mantisbt": "dev-master"
     },
     "autoload": {
         "psr-4": {
@@ -29,7 +42,8 @@
             "dev-master": "3.0-dev"
         },
         "platform": {
-            "php": "7.0"
+            "php": "7.0.0"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }
