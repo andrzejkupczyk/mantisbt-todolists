@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 auth_reauthenticate();
 access_ensure_project_level(config_get('manage_plugin_threshold'));
