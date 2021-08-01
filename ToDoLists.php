@@ -45,8 +45,8 @@ class ToDoListsPlugin extends MantisPlugin
     public function events(): array
     {
         return [
-            'EVENT_TODOLISTS_TASK_CREATED' => EVENT_TYPE_DEFAULT,
-            'EVENT_TODOLISTS_TASK_UPDATED' => EVENT_TYPE_DEFAULT,
+            'EVENT_TODOLISTS_TASK_CREATED' => EVENT_TYPE_EXECUTE,
+            'EVENT_TODOLISTS_TASK_UPDATED' => EVENT_TYPE_EXECUTE,
         ];
     }
 
@@ -54,6 +54,8 @@ class ToDoListsPlugin extends MantisPlugin
     {
         $events = [
             'EVENT_BUG_DELETED' => 'deleteTasks',
+            'EVENT_TODOLISTS_TASK_CREATED' => 'addLogEntry',
+            'EVENT_TODOLISTS_TASK_UPDATED' => 'addLogEntry',
         ];
 
         if (is_page_name('view.php') || is_page_name('bug_reminder')) {
@@ -103,6 +105,13 @@ class ToDoListsPlugin extends MantisPlugin
         $tasks = $this->repository->findByBug($bugId);
 
         include_once 'pages/partials/todolist.php';
+    }
+
+    public function addLogEntry(string $event, array $data)
+    {
+        $fieldName = strtolower(str_replace('EVENT_TODOLISTS_', '', $event));
+
+        history_log_event_direct($data['bug_id'], plugin_lang_get_defaulted($fieldName), '', $data['description']);
     }
 
     public function styles(): string
