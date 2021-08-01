@@ -49,7 +49,7 @@ class ToDoListsPlugin extends MantisPlugin
             'EVENT_VIEW_BUG_DETAILS' => 'displayTasks',
         ];
 
-        if (is_page_name('view')) {
+        if (is_page_name('view.php') || is_page_name('bug_reminder')) {
             $events += [
                 'EVENT_CORE_HEADERS' => 'cspHeaders',
                 'EVENT_LAYOUT_PAGE_FOOTER' => 'scripts',

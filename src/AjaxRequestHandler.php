@@ -64,7 +64,9 @@ class AjaxRequestHandler
 
     protected function deleteRequest()
     {
-        $this->repository->delete($this->id);
+        $this->repository->delete($this->taskId());
+
+        $this->sendJSON(null, 204);
     }
 
     protected function postRequest()
@@ -79,7 +81,7 @@ class AjaxRequestHandler
             ]);
         }
 
-        $this->sendJSON(array_filter($addedTasks));
+        $this->sendJSON(array_filter($addedTasks), 201);
     }
 
     protected function putRequest()
@@ -89,15 +91,26 @@ class AjaxRequestHandler
             'finished' => $this->finished,
             'description' => $this->description,
         ]);
+
+        $this->sendJSON($this->repository->findById($this->taskId()));
+    }
+
+    private function taskId(): int
+    {
+        return (int) $this->id;
     }
 
     /**
-     * @param mixed $data
+     * @param string|array $data
      */
     private function sendJSON($data, int $code = 200)
     {
+        $data = is_string($data) ? $data : json_encode($data);
+
         header('Content-Type: application/json');
+        header('Content-length: ' . strlen($data));
+
         http_response_code($code);
-        echo json_encode($data);
+        echo $data;
     }
 }

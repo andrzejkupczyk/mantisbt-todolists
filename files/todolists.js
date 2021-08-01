@@ -7,6 +7,7 @@
       newTask: {
         bug_id: 0,
         description: '',
+        descriptionHtml: '',
       },
       tasks: [],
       lang: undefined
@@ -32,7 +33,7 @@
 
         this.$http.post(this.action, {task: this.newTask}, (response) => {
           this.tasks.push(...response);
-          this.newTask.description = '';
+          this.newTask.description = this.newTask.descriptionHtml = '';
         });
       },
       updateTask(task) {
@@ -45,13 +46,15 @@
 
         this.$http.delete(
           this.action + '&id=' + task.id, {id: task.id},
-          () => this.tasks.$remove(task),
+          () => this.tasks.$remove(task)
         );
       },
       toggleFinished(task) {
         task.finished = !!task.finished;
 
-        this.updateTask(task).error(() => {
+        this.updateTask(task).success((response) => {
+          task = Object.assign(task, response.body);
+        }).error(() => {
           task.finished = !task.finished;
         });
       },
@@ -65,7 +68,9 @@
 
         task.description = newDesc;
 
-        this.updateTask(task).error(() => {
+        this.updateTask(task).success((response) => {
+          task.descriptionHtml = response.descriptionHtml;
+        }).error(() => {
           task.description = origDesc;
         });
       },

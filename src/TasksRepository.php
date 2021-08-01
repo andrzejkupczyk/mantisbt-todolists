@@ -23,7 +23,7 @@ class TasksRepository
      */
     public function delete(int $taskId)
     {
-        $query = sprintf('DELETE FROM %s WHERE id = %s', $this->table, db_param());
+        $query = "DELETE FROM $this->table WHERE id = " . db_param();
 
         return db_query($query, [$taskId]);
     }
@@ -33,7 +33,7 @@ class TasksRepository
      */
     public function deleteAssociatedToBug(int $bugId)
     {
-        $query = sprintf('DELETE FROM %s WHERE bug_id = %s', $this->table, db_param());
+        $query = "DELETE FROM $this->table WHERE bug_id = " . db_param();
 
         return db_query($query, [$bugId]);
     }
@@ -49,28 +49,40 @@ class TasksRepository
         return $result->GetArray();
     }
 
+    /**
+     * @return array|null
+     */
+    public function findById(int $taskId)
+    {
+        $results = $this->fetch("SELECT * FROM $this->table WHERE id = " . db_param(), [$taskId]);
+
+        return $results ? $this->normalizeTask($results[0]) : null;
+    }
+
     public function findByBug(int $bugId): array
     {
         $query = "SELECT * FROM $this->table WHERE bug_id = " . db_param();
-        $result = $this->fetch($query, [$bugId]);
+        $results = $this->fetch($query, [$bugId]);
 
-        return $this->castFinishedToBool($result);
+        return array_map([$this, 'normalizeTask'], $results);
     }
 
     public function insert(array $data): array
     {
+        $data['description'] = strip_tags($data['description']);
         extract($data);
+
         $query = "INSERT INTO $this->table (bug_id, description) VALUES (" . db_param() . ', ' . db_param() . ')';
         if (!db_query($query, [$bug_id, $description])) {
             return [];
         }
 
-        return [
+        return $this->normalizeTask([
             'id' => db_insert_id($this->table),
             'bug_id' => $bug_id,
             'finished' => false,
             'description' => $description,
-        ];
+        ]);
     }
 
     /**
@@ -81,15 +93,14 @@ class TasksRepository
         extract($data);
         $query = "UPDATE $this->table SET description = " . db_param() . ", finished = " . db_param() . ' WHERE id = ' . db_param();
 
-        return db_query($query, [$description, (int) $finished, $id]);
+        return db_query($query, [strip_tags($description), (int)$finished, $id]);
     }
 
-    protected function castFinishedToBool(array $result = []): array
+    protected function normalizeTask(array $task): array
     {
-        return array_map(function ($task) {
-            $task['finished'] = in_array($task['finished'], ['t', '1'], true);
+        $task['descriptionHtml'] = mention_format_text($task['description']);
+        $task['finished'] = in_array($task['finished'], ['t', '1'], true);
 
-            return $task;
-        }, $result);
+        return $task;
     }
 }
