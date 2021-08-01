@@ -35,7 +35,7 @@
     font-size: 13px;
 }
 
-.ToDoLists-form a {
+.ToDoLists-form span.ToDoLists-task-actions a {
     visibility: hidden;
 }
 
