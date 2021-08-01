@@ -7,10 +7,15 @@ services:
     depends_on:
       - mysql
       - postgres
+    restart: unless-stopped
+    environment:
+      - SMTP_HOST=${SMTP_HOST:-smtp.mailtrap.io}
+      - SMTP_PORT=${SMTP_PORT:-2525}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
     volumes:
       - ./:/var/www/html/plugins/ToDoLists
       - ./config:/var/www/html/config
-    restart: unless-stopped
   mysql:
     image: mariadb:10.5
     ports:
