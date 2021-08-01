@@ -1,46 +1,57 @@
 .ToDoLists-counter {
     font-weight: normal;
 }
+
 .ToDoLists-form {
     padding: 0;
 }
+
 .ToDoLists-form ul, .ToDoLists-form li {
     margin: 0;
     padding-left: 0;
 }
+
 .ToDoLists-form ul {
     list-style-type: none;
     margin-top: 10px;
 }
+
 .ToDoLists-form li {
     line-height: 20px;
     text-align: justify;
     position: relative;
     padding: 0 10px 0 18px;
 }
+
 .ToDoLists-form input[type="checkbox"] {
     left: 0;
     top: 4px;
     position: absolute;
     margin: 0;
 }
+
 .ToDoLists-form label {
     cursor: pointer;
     font-size: 13px;
 }
+
 .ToDoLists-form a {
     visibility: hidden;
 }
+
 .ToDoLists-form li:hover a {
     visibility: visible;
 }
+
 .ToDoLists-form a {
     text-decoration: none;
     cursor: pointer;
 }
+
 .ToDoLists-form .finished {
     text-decoration: line-through;
 }
+
 .ToDoLists-add-new {
     resize: none;
     overflow: hidden;

@@ -11,7 +11,7 @@ class ToDoListsPlugin extends MantisPlugin
     const VERSION = '3.0.0';
 
     /**
-     * @var Mantis\ToDoLists\TasksRepository
+     * @var \Mantis\ToDoLists\TasksRepository
      */
     protected $repository;
 
@@ -19,7 +19,7 @@ class ToDoListsPlugin extends MantisPlugin
     {
         $this->name = plugin_lang_get('name');
         $this->description = plugin_lang_get('description');
-        $this->page = 'config_page';
+        $this->page = 'config';
 
         $this->version = self::VERSION;
         $this->requires = ['MantisCore' => '2.0.0'];
@@ -44,11 +44,20 @@ class ToDoListsPlugin extends MantisPlugin
 
     public function hooks(): array
     {
-        return [
-            'EVENT_LAYOUT_RESOURCES' => 'resources',
-            'EVENT_VIEW_BUG_DETAILS' => 'display',
-            'EVENT_CORE_HEADERS' => 'cspHeaders',
+        $events = [
+            'EVENT_BUG_DELETED' => 'deleteTasks',
+            'EVENT_VIEW_BUG_DETAILS' => 'displayTasks',
         ];
+
+        if (is_page_name('view')) {
+            $events += [
+                'EVENT_CORE_HEADERS' => 'cspHeaders',
+                'EVENT_LAYOUT_PAGE_FOOTER' => 'scripts',
+                'EVENT_LAYOUT_RESOURCES' => 'styles',
+            ];
+        };
+
+        return $events;
     }
 
     /**
@@ -76,17 +85,28 @@ class ToDoListsPlugin extends MantisPlugin
         ];
     }
 
-    public function display(string $event, int $bugId)
+    public function deleteTasks(string $event, int $bugId)
+    {
+        $this->repository->deleteAssociatedToBug($bugId);
+    }
+
+    public function displayTasks(string $event, int $bugId)
     {
         $tasks = $this->repository->findByBug($bugId);
+
         include_once 'pages/partials/todolist.php';
     }
 
-    public function resources(string $event): string
+    public function styles(): string
     {
-        return '<link rel="stylesheet" type="text/css" href="' . plugin_file('todolists.css') . '" />' .
-            '<script type="text/javascript" src="' . plugin_file('vue-min.js') . '"></script>' .
-            '<script type="text/javascript" src="' . plugin_file('vue-resource-min.js') . '"></script>';
+        return '<link rel="stylesheet" type="text/css" href="' . plugin_file('todolists.css') . '" />';
+    }
+
+    public function scripts(): string
+    {
+        return '<script type="text/javascript" src="' . plugin_file('vue-min.js') . '"></script>' .
+            '<script type="text/javascript" src="' . plugin_file('vue-resource-min.js') . '"></script>' .
+            '<script type="text/javascript" src="' . plugin_file('todolists.min.js') . '"></script>';
     }
 
     public function cspHeaders()

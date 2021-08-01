@@ -19,13 +19,23 @@ class TasksRepository
     }
 
     /**
-     * @return \IteratorAggregate|boolean
+     * @return \IteratorAggregate|bool
      */
     public function delete(int $taskId)
     {
         $query = sprintf('DELETE FROM %s WHERE id = %s', $this->table, db_param());
 
         return db_query($query, [$taskId]);
+    }
+
+    /**
+     * @return \IteratorAggregate|bool
+     */
+    public function deleteAssociatedToBug(int $bugId)
+    {
+        $query = sprintf('DELETE FROM %s WHERE bug_id = %s', $this->table, db_param());
+
+        return db_query($query, [$bugId]);
     }
 
     public function fetch(string $query, array $params = []): array

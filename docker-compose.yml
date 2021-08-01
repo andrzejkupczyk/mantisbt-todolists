@@ -1,7 +1,7 @@
 version: "3.6"
 services:
   mantisbt:
-    image: xlrl/mantisbt:2.24.0
+    image: xlrl/mantisbt:2.25.2
     ports:
       - "8080:80"
     depends_on:
@@ -12,6 +12,8 @@ services:
     restart: unless-stopped
   mysql:
     image: mariadb:10.5
+    ports:
+      - "3306:3306"
     restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=root
