@@ -76,7 +76,7 @@ class TasksRepository
             return [];
         }
 
-        event_signal('EVENT_TODOLISTS_TASK_CREATED', [$data]);
+        event_signal('EVENT_TODOLISTS_TASK_CREATED', [$data + compact('bug_id')]);
 
         return $this->normalizeTask([
             'id' => db_insert_id($this->table),
@@ -96,7 +96,7 @@ class TasksRepository
         $query = "UPDATE $this->table SET description = " . db_param() . ', finished = ' . db_param() . ' WHERE id = ' . db_param();
 
         if ($result = db_query($query, [$description, (int) $finished, $id])) {
-            event_signal('EVENT_TODOLISTS_TASK_UPDATED', [$data]);
+            event_signal('EVENT_TODOLISTS_TASK_UPDATED', [$this->findById((int) $id)]);
         }
 
         return $result;
