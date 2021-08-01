@@ -62,38 +62,44 @@ class TasksRepository
     public function findByBug(int $bugId): array
     {
         $query = "SELECT * FROM $this->table WHERE bug_id = " . db_param();
-        $results = $this->fetch($query, [$bugId]);
 
-        return array_map([$this, 'normalizeTask'], $results);
+        return array_map([$this, 'normalizeTask'], $this->fetch($query, [$bugId]));
     }
 
     public function insert(array $data): array
     {
-        $data['description'] = strip_tags($data['description']);
-        extract($data);
+        extract($this->prepareInput($data));
 
         $query = "INSERT INTO $this->table (bug_id, description) VALUES (" . db_param() . ', ' . db_param() . ')';
+
         if (!db_query($query, [$bug_id, $description])) {
             return [];
         }
 
+        event_signal('EVENT_TODOLISTS_TASK_CREATED', [$data]);
+
         return $this->normalizeTask([
             'id' => db_insert_id($this->table),
             'bug_id' => $bug_id,
-            'finished' => false,
+            'finished' => $finished,
             'description' => $description,
         ]);
     }
 
     /**
-     * @return \IteratorAggregate|boolean
+     * @return \IteratorAggregate|bool
      */
     public function update(array $data)
     {
-        extract($data);
-        $query = "UPDATE $this->table SET description = " . db_param() . ", finished = " . db_param() . ' WHERE id = ' . db_param();
+        extract($this->prepareInput($data));
 
-        return db_query($query, [strip_tags($description), (int)$finished, $id]);
+        $query = "UPDATE $this->table SET description = " . db_param() . ', finished = ' . db_param() . ' WHERE id = ' . db_param();
+
+        if ($result = db_query($query, [$description, (int) $finished, $id])) {
+            event_signal('EVENT_TODOLISTS_TASK_UPDATED', [$data]);
+        }
+
+        return $result;
     }
 
     protected function normalizeTask(array $task): array
@@ -102,5 +108,13 @@ class TasksRepository
         $task['finished'] = in_array($task['finished'], ['t', '1'], true);
 
         return $task;
+    }
+
+    private function prepareInput(array $input): array
+    {
+        $input['description'] = strip_tags($input['description']);
+        $input['finished'] = $input['finished'] ?? false;
+
+        return $input;
     }
 }

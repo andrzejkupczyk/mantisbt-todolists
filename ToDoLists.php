@@ -42,17 +42,25 @@ class ToDoListsPlugin extends MantisPlugin
         ];
     }
 
+    public function events(): array
+    {
+        return [
+            'EVENT_TODOLISTS_TASK_CREATED' => EVENT_TYPE_DEFAULT,
+            'EVENT_TODOLISTS_TASK_UPDATED' => EVENT_TYPE_DEFAULT,
+        ];
+    }
+
     public function hooks(): array
     {
         $events = [
             'EVENT_BUG_DELETED' => 'deleteTasks',
-            'EVENT_VIEW_BUG_DETAILS' => 'displayTasks',
         ];
 
         if (is_page_name('view.php') || is_page_name('bug_reminder')) {
             $events += [
                 'EVENT_CORE_HEADERS' => 'cspHeaders',
                 'EVENT_LAYOUT_PAGE_FOOTER' => 'scripts',
+                'EVENT_VIEW_BUG_DETAILS' => 'displayTasks',
                 'EVENT_LAYOUT_RESOURCES' => 'styles',
             ];
         };
