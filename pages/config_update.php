@@ -25,4 +25,4 @@ setOptionIfNeeded('view_threshold', $viewThreshold);
 
 form_security_purge('plugin_ToDoLists_config_update');
 
-print_successful_redirect(plugin_page('config_page', true));
+print_successful_redirect(plugin_page('config', true));

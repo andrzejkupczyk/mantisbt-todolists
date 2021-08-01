@@ -17,13 +17,16 @@ v1.3.x   | [v1](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/ta
 - Go to Manage - Manage Plugins and install the plugin
 
 ### Using Composer
-If you are using [composer/installers](https://github.com/composer/installers) to simplify plugin management, run:   
+
+If you are using [composer/installers](https://github.com/composer/installers) to simplify plugin management, run:
 `composer require andrzejkupczyk/mantis-todolists`
 
 ## Screenshots
 
 ### Issue details
+
 ![Issue Details](files/screenshot_issue.png "Issue Details")
 
 ### Configuration
+
 ![Plugin Configuration](files/screenshot_config.png "Plug Configuration")
