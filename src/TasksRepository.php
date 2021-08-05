@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Mantis\ToDoLists;
 
+use MantisMarkdown;
+
 class TasksRepository
 {
     const TABLE_NAME = 'tasks';
@@ -19,7 +21,7 @@ class TasksRepository
     }
 
     /**
-     * @return \IteratorAggregate|bool
+     * @return bool|\IteratorAggregate
      */
     public function delete(int $taskId)
     {
@@ -29,7 +31,7 @@ class TasksRepository
     }
 
     /**
-     * @return \IteratorAggregate|bool
+     * @return bool|\IteratorAggregate
      */
     public function deleteAssociatedToBug(int $bugId)
     {
@@ -50,18 +52,18 @@ class TasksRepository
     }
 
     /**
-     * @return array|null
+     * @return null|array
      */
     public function findById(int $taskId)
     {
-        $results = $this->fetch("SELECT * FROM $this->table WHERE id = " . db_param(), [$taskId]);
+        $results = $this->fetch("SELECT * FROM $this->table WHERE id = " . db_param() . ' LIMIT 1', [$taskId]);
 
         return $results ? $this->normalizeTask($results[0]) : null;
     }
 
     public function findByBug(int $bugId): array
     {
-        $query = "SELECT * FROM $this->table WHERE bug_id = " . db_param();
+        $query = "SELECT * FROM $this->table WHERE bug_id = " . db_param() . ' ORDER BY id';
 
         return array_map([$this, 'normalizeTask'], $this->fetch($query, [$bugId]));
     }
@@ -72,46 +74,57 @@ class TasksRepository
 
         $query = "INSERT INTO $this->table (bug_id, description) VALUES (" . db_param() . ', ' . db_param() . ')';
 
-        if (!db_query($query, [$bug_id, $description])) {
+        db_query($query, [$bug_id, $description]);
+
+        if (!$taskId = db_insert_id($this->table)) {
             return [];
         }
 
-        event_signal('EVENT_TODOLISTS_TASK_CREATED', [$data + compact('bug_id')]);
-
-        return $this->normalizeTask([
-            'id' => db_insert_id($this->table),
+        $task = $this->normalizeTask([
+            'id' => $taskId,
             'bug_id' => $bug_id,
             'finished' => $finished,
             'description' => $description,
         ]);
+
+        event_signal('EVENT_TODOLISTS_TASK_CREATED', [$task]);
+
+        return $task;
     }
 
-    /**
-     * @return \IteratorAggregate|bool
-     */
-    public function update(array $data)
+    public function update(array $data): array
     {
         extract($this->prepareInput($data));
 
         $query = "UPDATE $this->table SET description = " . db_param() . ', finished = ' . db_param() . ' WHERE id = ' . db_param();
+        db_query($query, [$description, (int) $finished, $id]);
 
-        if ($result = db_query($query, [$description, (int) $finished, $id])) {
-            event_signal('EVENT_TODOLISTS_TASK_UPDATED', [$this->findById((int) $id)]);
+        $task = $this->findById((int) $id);
+
+        if (db_affected_rows()) {
+            event_signal('EVENT_TODOLISTS_TASK_UPDATED', [$task]);
         }
 
-        return $result;
+        return $task;
     }
 
     protected function normalizeTask(array $task): array
     {
-        $task['descriptionHtml'] = mention_format_text($task['description']);
+        $task['id'] = (int) $task['id'];
+        $task['bug_id'] = (int) $task['bug_id'];
         $task['finished'] = in_array($task['finished'], ['t', '1'], true);
+        $task['descriptionHtml'] = mention_format_text(
+            MantisMarkdown::convert_line($task['description'])
+        );
 
         return $task;
     }
 
     private function prepareInput(array $input): array
     {
+        if (array_key_exists('bug_id', $input)) {
+            $input['bug_id'] = (int) $input['bug_id'];
+        }
         $input['description'] = strip_tags($input['description']);
         $input['finished'] = $input['finished'] ?? false;
 

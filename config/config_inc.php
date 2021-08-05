@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 $g_hostname = 'mysql';
 $g_db_type = 'mysqli';
 $g_database_name = 'bugtracker';

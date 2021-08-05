@@ -6,19 +6,20 @@
  */
 $config = new PhpCsFixer\Config();
 return $config
-  ->setRiskyAllowed(true)
-  ->setRules([
-    '@PHP54Migration' => true,
-    '@PHP70Migration' => true,
-    '@PHP70Migration:risky' => true,
-    '@PHP56Migration:risky' => true,
-    '@PSR1' => true,
-    '@PSR12:risky' => true,
-    '@PSR12' => true,
-    '@PSR2' => true,
-  ])
-  ->setFinder(PhpCsFixer\Finder::create()
-    ->exclude('vendor')
-    ->in(__DIR__)
-  )
-  ;
+    ->setRiskyAllowed(true)
+    ->setRules([
+        '@PHP54Migration' => true,
+        '@PHP70Migration' => true,
+        '@PHP70Migration:risky' => true,
+        '@PHP56Migration:risky' => true,
+        '@PSR1' => true,
+        '@PSR12:risky' => true,
+        '@PSR12' => true,
+        '@PSR2' => true,
+        'concat_space' => ['spacing' => 'one'],
+        'no_unneeded_curly_braces' => true,
+    ])
+    ->setFinder(PhpCsFixer\Finder::create()
+        ->exclude('vendor')
+        ->in(__DIR__)
+    );
