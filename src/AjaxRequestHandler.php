@@ -30,8 +30,9 @@ class AjaxRequestHandler
     }
 
     /**
-     * @return mixed
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function __get(string $name)
     {
@@ -64,7 +65,7 @@ class AjaxRequestHandler
 
     protected function deleteRequest()
     {
-        $this->repository->delete($this->taskId());
+        $this->repository->delete($this->id);
 
         $this->sendJSON(null, 204);
     }
@@ -86,22 +87,17 @@ class AjaxRequestHandler
 
     protected function putRequest()
     {
-        $this->repository->update([
+        $task = $this->repository->update([
             'id' => $this->id,
             'finished' => $this->finished,
             'description' => $this->description,
         ]);
 
-        $this->sendJSON($this->repository->findById($this->taskId()));
-    }
-
-    private function taskId(): int
-    {
-        return (int) $this->id;
+        $this->sendJSON($task);
     }
 
     /**
-     * @param string|array $data
+     * @param array|string $data
      */
     private function sendJSON($data, int $code = 200)
     {

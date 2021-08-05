@@ -65,14 +65,14 @@ class ToDoListsPlugin extends MantisPlugin
                 'EVENT_VIEW_BUG_DETAILS' => 'displayTasks',
                 'EVENT_LAYOUT_RESOURCES' => 'styles',
             ];
-        };
+        }
 
         return $events;
     }
 
     /**
-     * @link https://www.mantisbt.org/wiki/doku.php/mantisbt:plugins_overview#schema_management
-     * @link https://adodb.org/dokuwiki/doku.php?id=v5:dictionary:dictionary_index
+     * @see https://www.mantisbt.org/wiki/doku.php/mantisbt:plugins_overview#schema_management
+     * @see https://adodb.org/dokuwiki/doku.php?id=v5:dictionary:dictionary_index
      */
     public function schema(): array
     {
