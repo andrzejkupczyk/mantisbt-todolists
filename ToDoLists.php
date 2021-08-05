@@ -8,7 +8,7 @@ use Mantis\ToDoLists\TasksRepository;
 
 class ToDoListsPlugin extends MantisPlugin
 {
-    const VERSION = '3.0.0';
+    const VERSION = '2.3.0';
 
     /**
      * @var \Mantis\ToDoLists\TasksRepository
