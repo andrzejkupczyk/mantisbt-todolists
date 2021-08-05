@@ -18,7 +18,7 @@ v1.3.x   | [v1](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/ta
 
 ### Using Composer
 
-If you are using [composer/installers](https://github.com/composer/installers) to simplify plugin management, run:
+If you are using [composer/installers](https://github.com/composer/installers) to simplify plugin management, run:  
 `composer require andrzejkupczyk/mantis-todolists`
 
 ## Screenshots
