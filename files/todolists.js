@@ -31,32 +31,29 @@
           return;
         }
 
-        this.$http.post(this.action, {task: this.newTask}, (response) => {
-          this.tasks.push(...response);
+        this.$http.post(this.action, {task: this.newTask}).then((response) => {
+          this.tasks.push(...response.body);
           this.newTask.description = this.newTask.descriptionHtml = '';
         });
       },
       updateTask(task) {
-        return this.$http.put(this.action, {task: task});
+        return this.$http.put(this.action, {task: task}, {emulateHTTP: true});
       },
       deleteTask(task) {
         if (!task.finished && !confirm(this.lang?.confirmDeletion)) {
           return;
         }
 
-        this.$http.delete(
-          this.action + '&id=' + task.id, {id: task.id},
-          () => this.tasks.$remove(task)
-        );
+        this.$http.delete(this.action, {body: {id: task.id}, emulateHTTP: true})
+          .then(() => this.tasks.$remove(task));
       },
       toggleFinished(task) {
         task.finished = !!task.finished;
 
-        this.updateTask(task).success((response) => {
-          task = Object.assign(task, response.body);
-        }).error(() => {
-          task.finished = !task.finished;
-        });
+        this.updateTask(task).then(
+          (response) => task = Object.assign(task, response.body),
+          () => task.finished = !task.finished
+        );
       },
       changeDescription(task) {
         const origDesc = task.description;
@@ -68,11 +65,10 @@
 
         task.description = newDesc;
 
-        this.updateTask(task).success((response) => {
-          task.descriptionHtml = response.descriptionHtml;
-        }).error(() => {
-          task.description = origDesc;
-        });
+        this.updateTask(task).then(
+          (response) => task.descriptionHtml = response.body.descriptionHtml,
+          () => task.description = origDesc
+        );
       },
       validateDescription(description) {
         return (description ? description.length : 0) > 0;
