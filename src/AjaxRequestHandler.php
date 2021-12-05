@@ -41,20 +41,20 @@ class AjaxRequestHandler
         } elseif (isset($this->data[$name])) {
             return $this->data[$name];
         } else {
-            throw new Exception("Property $name is undefined");
+            throw new Exception("Task's `$name` property is undefined");
         }
     }
 
     public function handle()
     {
-        $method = $_SERVER['REQUEST_METHOD'] . 'Request';
+        $method = "{$this->httpMethod()}Request";
 
         try {
             if (!method_exists($this, $method)) {
-                throw new Exception("Method {$_SERVER['REQUEST_METHOD']} not allowed", 405);
+                throw new Exception("Method `{$this->httpMethod()}` not allowed", 405);
             }
             if (!$data = file_get_contents('php://input')) {
-                throw new Exception();
+                throw new Exception('Invalid request body', 422);
             }
             $this->data = json_decode($data, true);
             call_user_func([$this, $method]);
@@ -108,5 +108,12 @@ class AjaxRequestHandler
 
         http_response_code($code);
         echo $data;
+    }
+
+    private function httpMethod(): string
+    {
+        $headers = getallheaders();
+
+        return $headers['X-HTTP-Method-Override'] ?? $_SERVER['REQUEST_METHOD'];
     }
 }
