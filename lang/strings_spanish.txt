@@ -1,0 +1,21 @@
+<?php
+
+$s_plugin_ToDoLists_name = 'To-do lists';
+$s_plugin_ToDoLists_description = 'Agrega la capacidad de crear listas de tareas pendientes.';
+$s_plugin_ToDoLists_configuration = 'Configuracion';
+
+$s_plugin_ToDoLists_manage_threshold = 'Gestionar';
+$s_plugin_ToDoLists_manage_threshold_desc = 'Crea y gestiona tus propias tareas';
+$s_plugin_ToDoLists_view_threshold = 'Ver';
+$s_plugin_ToDoLists_view_threshold_desc = 'Ver tareas creadas por otras';
+
+$s_plugin_ToDoLists_things_to_do = 'Cosas para hacer';
+$s_plugin_ToDoLists_add = 'Agregar';
+$s_plugin_ToDoLists_add_new_task = 'Agregar Nueva Tarea';
+$s_plugin_ToDoLists_edit_task = 'Edit tarea';
+$s_plugin_ToDoLists_enter_new_description = 'Ingrese una nueva descripción para la tarea (máximo 120 caracteres):';
+$s_plugin_ToDoLists_delete_task = 'Eliminar Tarea';
+$s_plugin_ToDoLists_confirm_deletion = '¿Estás segura de que quieres eliminar la tarea sin Terminar?';
+
+$s_plugin_ToDoLists_task_created = 'Tarea Creada';
+$s_plugin_ToDoLists_task_updated = 'Tarea Actualizada';
