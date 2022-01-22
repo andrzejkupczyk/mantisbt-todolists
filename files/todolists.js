@@ -46,8 +46,9 @@
           return;
         }
 
-        this.$http.delete(this.action, {body: {task: {id: task.id}}})
-          .then(() => this.tasks.$remove(task));
+        this.$http.delete(this.action, {body: {task: {id: task.id}}}).then(() => {
+          this.tasks.splice(this.tasks.indexOf(task), 1);
+        });
       },
       toggleFinished(task) {
         task.finished = !!task.finished;
