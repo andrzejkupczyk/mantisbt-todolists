@@ -1,0 +1,21 @@
+<?php
+
+$s_plugin_ToDoLists_name = 'To-do lists';
+$s_plugin_ToDoLists_description = 'Добавляет возможность создания списков дел/заданий.';
+$s_plugin_ToDoLists_configuration = 'Настройка';
+
+$s_plugin_ToDoLists_manage_threshold = 'Управление';
+$s_plugin_ToDoLists_manage_threshold_desc = 'Создать и управлять собственными заданиями';
+$s_plugin_ToDoLists_view_threshold = 'Просмотр';
+$s_plugin_ToDoLists_view_threshold_desc = 'Просматривать задания, созданные другими';
+
+$s_plugin_ToDoLists_things_to_do = 'Что cделать';
+$s_plugin_ToDoLists_add = 'Добавить';
+$s_plugin_ToDoLists_add_new_task = 'Добавить новое задание';
+$s_plugin_ToDoLists_edit_task = 'Редактировать задание';
+$s_plugin_ToDoLists_enter_new_description = 'Введите новое описание задания (не более 120 символов):';
+$s_plugin_ToDoLists_delete_task = 'Удалить задание';
+$s_plugin_ToDoLists_confirm_deletion = 'Вы уверены, что хотите удалить незавершенное задание?';
+
+$s_plugin_ToDoLists_task_created = 'Задание создано';
+$s_plugin_ToDoLists_task_updated = 'Задание обновлено';
