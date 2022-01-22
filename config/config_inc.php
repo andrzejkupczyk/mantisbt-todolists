@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 $g_hostname = 'mysql';
 $g_db_type = 'mysqli';
-$g_database_name = 'bugtracker';
-$g_db_username = 'root';
 $g_db_password = 'root';
 
 $g_default_timezone = 'Europe/Warsaw';
