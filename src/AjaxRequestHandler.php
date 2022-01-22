@@ -38,11 +38,9 @@ class AjaxRequestHandler
     {
         if (isset($this->data['task'][$name])) {
             return $this->data['task'][$name];
-        } elseif (isset($this->data[$name])) {
-            return $this->data[$name];
-        } else {
-            throw new Exception("Task's `$name` property is undefined");
         }
+
+        throw new Exception("Task's `$name` property is undefined");
     }
 
     public function handle()

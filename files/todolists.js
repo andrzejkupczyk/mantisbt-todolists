@@ -1,5 +1,7 @@
 (() => {
 
+  Vue.http.options.emulateHTTP = true;
+
   window.ToDoList = new Vue({
     el: '#ToDoLists',
     props: ['currentTasks', 'isReadonly', 'translations'],
@@ -37,14 +39,14 @@
         });
       },
       updateTask(task) {
-        return this.$http.put(this.action, {task: task}, {emulateHTTP: true});
+        return this.$http.put(this.action, {task: task});
       },
       deleteTask(task) {
         if (!task.finished && !confirm(this.lang?.confirmDeletion)) {
           return;
         }
 
-        this.$http.delete(this.action, {body: {id: task.id}, emulateHTTP: true})
+        this.$http.delete(this.action, {body: {task: {id: task.id}}})
           .then(() => this.tasks.$remove(task));
       },
       toggleFinished(task) {
