@@ -37,7 +37,7 @@ if (!access_has_project_level(plugin_config_get('view_threshold'))) {
                 <?= plugin_lang_get('add') ?>
             </button>
             <ul v-if="tasks.length" v-cloak>
-                <li v-for="task in tasks | orderBy 'finished'" track-by="id">
+                <li v-for="task in tasks" track-by="id">
                     <label :class="{finished: task.finished}">
                         <input
                                 @change="toggleFinished(task)"
