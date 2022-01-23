@@ -110,8 +110,9 @@ class AjaxRequestHandler
 
     private function httpMethod(): string
     {
-        $headers = getallheaders();
+        $headers = array_change_key_case(getallheaders());
+        $method = $headers['x-http-method-override'] ?? $_SERVER['REQUEST_METHOD'];
 
-        return $headers['X-HTTP-Method-Override'] ?? $_SERVER['REQUEST_METHOD'];
+        return strtolower($method);
     }
 }
