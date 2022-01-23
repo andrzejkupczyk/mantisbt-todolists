@@ -1,7 +1,5 @@
 (() => {
 
-  Vue.http.options.emulateHTTP = true;
-
   window.ToDoList = new Vue({
     el: '#ToDoLists',
     props: ['currentTasks', 'isReadonly', 'translations'],
@@ -33,20 +31,24 @@
           return;
         }
 
-        this.$http.post(this.action, {task: this.newTask}).then((response) => {
-          this.tasks.push(...response.body);
+        axios.post(this.action, {task: this.newTask}).then((response) => {
+          this.tasks.push(...response.data);
           this.newTask.description = this.newTask.descriptionHtml = '';
         });
       },
       updateTask(task) {
-        return this.$http.put(this.action, {task: task});
+        return axios.post(this.action, {task: task}, {
+          headers: {'x-http-method-override': 'put'}
+        });
       },
       deleteTask(task) {
         if (!task.finished && !confirm(this.lang?.confirmDeletion)) {
           return;
         }
 
-        this.$http.delete(this.action, {body: {task: {id: task.id}}}).then(() => {
+        axios.post(this.action, {task: {id: task.id}}, {
+          headers: {'x-http-method-override': 'delete'}
+        }).then(() => {
           this.tasks.splice(this.tasks.indexOf(task), 1);
         });
       },
@@ -54,7 +56,7 @@
         task.finished = !!task.finished;
 
         this.updateTask(task).then(
-          (response) => task = Object.assign(task, response.body),
+          (response) => task = Object.assign(task, response.data),
           () => task.finished = !task.finished
         );
       },
@@ -69,7 +71,7 @@
         task.description = newDesc;
 
         this.updateTask(task).then(
-          (response) => task.descriptionHtml = response.body.descriptionHtml,
+          (response) => task.descriptionHtml = response.data.descriptionHtml,
           () => task.description = origDesc
         );
       },

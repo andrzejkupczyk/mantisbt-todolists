@@ -121,8 +121,8 @@ class ToDoListsPlugin extends MantisPlugin
 
     public function scripts(): string
     {
-        return '<script type="text/javascript" src="' . plugin_file('vue-min.js') . '"></script>' .
-            '<script type="text/javascript" src="' . plugin_file('vue-resource-min.js') . '"></script>' .
+        return '<script type="text/javascript" src="' . plugin_file('vue.min.js') . '"></script>' .
+            '<script type="text/javascript" src="' . plugin_file('axios.min.js') . '"></script>' .
             '<script type="text/javascript" src="' . plugin_file('todolists.min.js') . '"></script>';
     }
 
