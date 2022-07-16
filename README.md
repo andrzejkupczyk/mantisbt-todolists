@@ -3,10 +3,10 @@
 To-Do Lists Plugin for [Mantis Bug Tracker](https://www.mantisbt.org/). 
 Allows users (e.g. developers) to manage to-do tasks within a bug report.
 
-MantisBT | Plugin
----------|-------------------------------------------------------------------------------
-v2.x     | [v2](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/latest)
-v1.3.x   | [v1](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/tag/v1.2.2)
+| MantisBT | Plugin                                                                         |
+|----------|--------------------------------------------------------------------------------|
+| v2.x     | [v2](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/latest)     |
+| v1.3.x   | [v1](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/tag/v1.2.2) |
 
 ## Install
 
@@ -30,3 +30,12 @@ If you are using [composer/installers](https://github.com/composer/installers) t
 ### Configuration
 
 ![Plugin Configuration](files/screenshot_config.png "Plug Configuration")
+
+## Translations
+
+Currently supported languages are:
+:de:
+:es:
+:gb:
+:poland:
+:ru:
