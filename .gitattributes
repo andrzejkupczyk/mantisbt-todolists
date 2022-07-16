@@ -4,7 +4,6 @@
 .gitignore          export-ignore
 .php_cs.dist        export-ignore
 /.github            export-ignore
-/.phive             export-ignore
 /config             export-ignore
 /src/todolists.js   export-ignore
 babel.config.json   export-ignore
