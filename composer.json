@@ -36,7 +36,7 @@
     },
     "scripts": {
         "analyse": "@fix --dry-run",
-        "fix": "@php tools/php-cs-fixer fix --diff"
+        "fix": "@php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --diff"
     },
     "config": {
         "optimize-autoloader": true

@@ -1,7 +1,7 @@
 !/vendor/autoload.php
 !/vendor/composer
 .env
-.php_cs.cache
+.php-cs-fixer.cache
 /.idea
 /node_modules
 /tools

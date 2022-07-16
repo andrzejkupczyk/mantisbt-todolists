@@ -21,7 +21,7 @@ $canManage = access_has_project_level(plugin_config_get('manage_threshold'));
             </button>
         </form>
         <?php endif ?>
-        <?php if(!empty($tasks)): ?>
+        <?php if (!empty($tasks)): ?>
         <ul class="<?= plugin_get_current() ?>-items <?= $canManage ? 'manageable' : '' ?>">
             <?php foreach ($tasks as $task): ?>
                 <li class="<?= plugin_get_current() ?>-item <?= $task['finished'] ? 'finished' : 'unfinished'?>">
