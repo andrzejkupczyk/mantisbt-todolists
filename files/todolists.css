@@ -2,6 +2,7 @@
     resize: none;
     overflow: hidden;
     overflow-wrap: break-word;
+    min-width: calc(50% - 50px);
 }
 
 .ToDoLists-items {
@@ -15,23 +16,27 @@
 
 .ToDoLists-item {
     font-size: 13px;
+    user-select: none;
 }
 
 .ToDoLists-item.finished:before {
-    content: "☑️"
+    content: "☑️";
 }
 
 .ToDoLists-item.unfinished:before {
     content: "⬜";
 }
 
-.ToDoLists-items.manageable .description,
-.ToDoLists-item .actions a {
-    cursor: pointer;
-}
-
 .ToDoLists-item.finished .description {
     text-decoration: line-through;
+}
+
+.ToDoLists-item.unfinished .description {
+    text-decoration: none;
+}
+
+.ToDoLists-items.manageable .description {
+    cursor: pointer;
 }
 
 .ToDoLists-item .actions {

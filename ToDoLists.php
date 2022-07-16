@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/vendor/autoload.php';
 
+use Mantis\ToDoLists\HtmxHelper;
 use Mantis\ToDoLists\TasksRepository;
 
 class ToDoListsPlugin extends MantisPlugin
@@ -47,6 +48,7 @@ class ToDoListsPlugin extends MantisPlugin
         return [
             'EVENT_TODOLISTS_TASK_CREATED' => EVENT_TYPE_EXECUTE,
             'EVENT_TODOLISTS_TASK_UPDATED' => EVENT_TYPE_EXECUTE,
+            'EVENT_TODOLISTS_REQUEST_HANDLED' => EVENT_TYPE_EXECUTE,
         ];
     }
 
@@ -56,6 +58,7 @@ class ToDoListsPlugin extends MantisPlugin
             'EVENT_BUG_DELETED' => 'deleteTasks',
             'EVENT_TODOLISTS_TASK_CREATED' => 'addLogEntry',
             'EVENT_TODOLISTS_TASK_UPDATED' => 'addLogEntry',
+            'EVENT_TODOLISTS_REQUEST_HANDLED' => 'displayTasks',
         ];
 
         if (is_page_name('view.php') || is_page_name('bug_reminder')) {
@@ -103,8 +106,15 @@ class ToDoListsPlugin extends MantisPlugin
     public function displayTasks(string $event, int $bugId)
     {
         $tasks = $this->repository->findByBug($bugId);
+        $canManage = access_has_project_level(plugin_config_get('manage_threshold'));
 
-        include_once 'pages/partials/todolist.php';
+        if ($event === 'EVENT_VIEW_BUG_DETAILS') {
+            include_once 'pages/partials/todolist.php';
+        } else {
+            HtmxHelper::triggerHeader($event);
+
+            include_once 'pages/partials/list_items.php';
+        }
     }
 
     public function addLogEntry(string $event, array $data)

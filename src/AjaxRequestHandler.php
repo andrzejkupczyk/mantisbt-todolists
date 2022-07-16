@@ -7,9 +7,11 @@ namespace Mantis\ToDoLists;
 use Exception;
 
 /**
+ * @todo Separate request object from request handling
+ *
  * @property int id
  * @property int bug_id
- * @property int finished
+ * @property bool finished
  * @property string description
  */
 class AjaxRequestHandler
@@ -29,90 +31,78 @@ class AjaxRequestHandler
         $this->repository = $repository;
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return mixed
-     */
     public function __get(string $name)
     {
-        if (isset($this->data['task'][$name])) {
-            return $this->data['task'][$name];
-        }
-
-        throw new Exception("Task's `$name` property is undefined");
+        return $this->data[$name];
     }
 
     public function handle()
     {
-        $method = "{$this->httpMethod()}Request";
+        $method = "{$this->method()}Request";
 
-        try {
-            if (!method_exists($this, $method)) {
-                throw new Exception("Method `{$this->httpMethod()}` not allowed", 405);
-            }
-            if (!$data = file_get_contents('php://input')) {
-                throw new Exception('Invalid request body', 422);
-            }
-            $this->data = json_decode($data, true);
-            call_user_func([$this, $method]);
-        } catch (Exception $e) {
-            $this->sendJSON($e->getMessage(), $e->getCode() ?: 400);
+        if (!method_exists($this, $method)) {
+            throw new Exception("Method `{$this->method()}` not allowed", 405);
         }
+        $this->data = $this->input();
+        call_user_func([$this, $method]);
+
+        event_signal('EVENT_TODOLISTS_REQUEST_HANDLED', [
+            'bugId' => $this->bug_id,
+        ]);
     }
 
+    public function header(string $name)
+    {
+        return $this->headers()[strtolower($name)] ?? null;
+    }
+
+    public function headers(): array
+    {
+        return array_change_key_case(getallheaders());
+    }
+
+
+    public function input(): array
+    {
+        return [
+            'id' => gpc_get_int('id', null),
+            'bug_id' => gpc_get_int('bug_id'),
+            'finished' => gpc_get_bool('finished', false),
+            'description' => $this->header('hx-prompt')
+                ?? gpc_get_string('description'),
+        ];
+    }
+
+    public function method(): string
+    {
+        $method = $this->header('x-http-method-override')
+            ?? $_SERVER['REQUEST_METHOD'];
+
+        return strtolower($method);
+    }
     protected function deleteRequest()
     {
         $this->repository->delete($this->id);
-
-        $this->sendJSON(null, 204);
     }
 
     protected function postRequest()
     {
         $tasksToAdd = array_filter(explode(PHP_EOL, $this->description));
-        $addedTasks = [];
 
         foreach ($tasksToAdd as $description) {
-            $addedTasks[] = $this->repository->insert([
+            $this->repository->insert([
                 'bug_id' => $this->bug_id,
                 'description' => $description,
             ]);
         }
-
-        $this->sendJSON(array_filter($addedTasks), 201);
     }
 
     protected function putRequest()
     {
-        $task = $this->repository->update([
+        $this->repository->update([
             'id' => $this->id,
             'finished' => $this->finished,
             'description' => $this->description,
         ]);
-
-        $this->sendJSON($task);
-    }
-
-    /**
-     * @param array|string $data
-     */
-    private function sendJSON($data, int $code = 200)
-    {
-        $data = is_string($data) ? $data : json_encode($data);
-
-        header('Content-Type: application/json');
-        header('Content-length: ' . strlen($data));
-
-        http_response_code($code);
-        echo $data;
-    }
-
-    private function httpMethod(): string
-    {
-        $headers = array_change_key_case(getallheaders());
-        $method = $headers['x-http-method-override'] ?? $_SERVER['REQUEST_METHOD'];
-
-        return strtolower($method);
     }
 }
