@@ -1,0 +1,21 @@
+<?php
+
+$s_plugin_ToDoLists_name = 'To-do lists';
+$s_plugin_ToDoLists_description = 'Fügt die Möglichkeit hinzu, Aufgabenlisten zu erstellen.';
+$s_plugin_ToDoLists_configuration = 'Konfiguration';
+
+$s_plugin_ToDoLists_manage_threshold = 'Verwalten';
+$s_plugin_ToDoLists_manage_threshold_desc = 'Erstellen und verwalten eigener Aufgaben';
+$s_plugin_ToDoLists_view_threshold = 'Anzeigen';
+$s_plugin_ToDoLists_view_threshold_desc = 'Anzeigen von Aufgaben, die von anderen erstellt wurden';
+
+$s_plugin_ToDoLists_things_to_do = 'Dinge die zu tun sind';
+$s_plugin_ToDoLists_add = 'Hinzufügen';
+$s_plugin_ToDoLists_add_new_task = 'Neue Aufgabe hinzufügen';
+$s_plugin_ToDoLists_edit_task = 'Aufgabe bearbeiten';
+$s_plugin_ToDoLists_enter_new_description = 'Gib eine neue Beschreibung für die Aufgabe ein (max. 120 Zeichen):';
+$s_plugin_ToDoLists_delete_task = 'Aufgabe entfernen';
+$s_plugin_ToDoLists_confirm_deletion = 'Möchtest du die unerledigte Aufgabe wirklich entfernen?';
+
+$s_plugin_ToDoLists_task_created = 'Aufgabe erstellt';
+$s_plugin_ToDoLists_task_updated = 'Aufgabe aktualisiert';
