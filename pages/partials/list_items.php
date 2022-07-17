@@ -20,15 +20,13 @@ if (!empty($tasks)): ?>
             <?php if ($canManage): ?>
             <span class="actions">
                 <a
+                    href
                     class="edit"
-                href
                     title="<?= plugin_lang_get('edit_task') ?>"
-                    <?php if (!$task['finished']): ?>
                     hx-post="<?= plugin_page('ajax_page') ?>"
                     hx-headers='{"x-http-method-override": "put"}'
                     hx-vals='<?= json_encode($task) ?>'
-                    hx-prompt="<?= plugin_lang_get('enter_new_description') ?>"
-                    <?php endif ?>
+                    hx-prompt="<?= $task['description'] . "\n\n" . plugin_lang_get('enter_new_description') ?>"
                 >
                     <i class="fa fa-pencil"></i>
                 </a>
@@ -39,7 +37,7 @@ if (!empty($tasks)): ?>
                     hx-headers='{"x-http-method-override": "delete"}'
                     hx-vals='<?= json_encode($task) ?>'
                     <?php if (!$task['finished']): ?>
-                    hx-confirm="<?= plugin_lang_get('confirm_deletion') ?>"
+                    hx-confirm="<?= $task['description'] . "\n\n" . plugin_lang_get('confirm_deletion') ?>"
                     <?php endif ?>
                 >
                     <i class="fa fa-trash"></i>

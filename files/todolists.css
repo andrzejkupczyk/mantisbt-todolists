@@ -1,47 +1,72 @@
+.ToDoLists form {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 4px;
+    justify-content: space-between;
+}
+
 .ToDoLists textarea {
-    resize: none;
-    overflow: hidden;
+    flex: 1 1 auto;
+    min-height: 29px;
     overflow-wrap: break-word;
-    min-width: calc(50% - 50px);
+    overflow: hidden;
+    resize: vertical;
 }
 
 .ToDoLists-items {
     display: flex;
     flex-direction: column;
+    gap: 2px;
     list-style-type: none;
     margin: 5px 0;
     padding: 0;
-    row-gap: 5px;
 }
 
 .ToDoLists-item {
+    align-content: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     font-size: 13px;
-    user-select: none;
+    justify-content: space-between;
 }
 
-.ToDoLists-item.finished:before {
-    content: "☑️";
+.ToDoLists-item::before {
+    font-family: FontAwesome;
+    font-size: larger;
+    height: 20px;
 }
 
-.ToDoLists-item.unfinished:before {
-    content: "⬜";
+.ToDoLists-item.finished::before {
+    content: "\f046";
+    margin-right: 4px;
+}
+
+.ToDoLists-item.unfinished::before {
+    content: "\f096";
+    margin-right: 6px;
+}
+
+.ToDoLists-item .description {
+    color: #337ab7;
+    flex: auto;
+}
+
+.ToDoLists-item:hover .description {
+    color: #23527c;
+    cursor: pointer;
 }
 
 .ToDoLists-item.finished .description {
     text-decoration: line-through;
 }
 
-.ToDoLists-item.unfinished .description {
-    text-decoration: none;
-}
-
-.ToDoLists-items.manageable .description {
-    cursor: pointer;
-}
-
 .ToDoLists-item .actions {
     margin-left: 10px;
+    user-select: none;
     visibility: hidden;
+    white-space: nowrap;
 }
 
 .ToDoLists-item:hover .actions {
@@ -51,8 +76,4 @@
 .ToDoLists-item .actions a {
     padding: 2px;
     text-decoration: none;
-}
-
-.ToDoLists-item.finished .edit {
-    display: none;
 }
