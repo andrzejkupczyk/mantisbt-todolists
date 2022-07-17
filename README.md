@@ -21,15 +21,15 @@ Allows users (e.g. developers) to manage to-do tasks within a bug report.
 If you are using [composer/installers](https://github.com/composer/installers) to simplify plugin management, run:  
 `composer require andrzejkupczyk/mantis-todolists`
 
-## Screenshots
+## Functionality
 
 ### Issue details
 
-![Issue Details](files/screenshot_issue.png "Issue Details")
+[Issue details](https://user-images.githubusercontent.com/11018286/179420070-dd83f594-c935-4be5-b38e-2f771a77bc3a.webm)
 
 ### Configuration
 
-![Plugin Configuration](files/screenshot_config.png "Plug Configuration")
+![Configuration](https://user-images.githubusercontent.com/11018286/179420084-5d3392ad-cf12-4d4d-ae71-79a8cbd23337.png)
 
 ## Translations
 
