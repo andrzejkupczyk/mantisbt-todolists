@@ -26,6 +26,7 @@ if (!access_has_project_level(plugin_config_get('view_threshold'))) {
                 rows="1"
                 class="input-sm"
                 placeholder="<?= plugin_lang_get('add_new_task') ?>"
+                required
             ></textarea>
             <button type="submit" class="btn btn-primary btn-sm btn-white btn-round">
                 <?= plugin_lang_get('add') ?>
