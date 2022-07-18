@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Mantis\ToDoLists;
+namespace Mantis\ToDoLists\Database;
 
 use MantisMarkdown;
 

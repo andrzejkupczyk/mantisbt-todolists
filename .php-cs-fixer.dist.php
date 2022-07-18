@@ -18,6 +18,7 @@ return $config
         '@PSR2' => true,
         'concat_space' => ['spacing'=>'one'],
         'no_unneeded_curly_braces' => true,
+        'no_unused_imports' => true,
     ])
     ->setFinder(PhpCsFixer\Finder::create()
         ->exclude('vendor')

@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 require __DIR__ . '/vendor/autoload.php';
 
-use Mantis\ToDoLists\HtmxHelper;
-use Mantis\ToDoLists\TasksRepository;
+use Mantis\ToDoLists\Database\TasksRepository;
 
 class ToDoListsPlugin extends MantisPlugin
 {
     const VERSION = '2.6.0';
 
     /**
-     * @var \Mantis\ToDoLists\TasksRepository
+     * @var \Mantis\ToDoLists\Database\TasksRepository
      */
     protected $repository;
 
@@ -111,7 +110,7 @@ class ToDoListsPlugin extends MantisPlugin
         if ($event === 'EVENT_VIEW_BUG_DETAILS') {
             include_once 'pages/partials/todolist.php';
         } else {
-            HtmxHelper::triggerHeader($event);
+            header("HX-Trigger: $event");
 
             include_once 'pages/partials/list_items.php';
         }
