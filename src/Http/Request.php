@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Mantis\ToDoLists\Http;
+namespace WebGarden\ToDoLists\Http;
 
 use ArrayAccess;
 use RuntimeException;
@@ -10,7 +10,7 @@ use RuntimeException;
 class Request implements ArrayAccess
 {
     /**
-     * @var \Mantis\ToDoLists\Http\SanitizedUserInput
+     * @var \WebGarden\ToDoLists\Http\SanitizedUserInput
      */
     protected $parameters;
 
@@ -36,7 +36,7 @@ class Request implements ArrayAccess
      * @param string $name
      * @return string|null
      */
-    public function header(string $name)
+    public function header($name)
     {
         return $this->headers()[strtolower($name)] ?? null;
     }

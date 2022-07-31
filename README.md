@@ -1,25 +1,23 @@
-# To-Do Lists
+# MantisBT To-Do Lists
 
-To-Do Lists Plugin for [Mantis Bug Tracker](https://www.mantisbt.org/). 
+![PHP requirement](https://img.shields.io/packagist/php-v/andrzejkupczyk/mantis-todolists?style=flat-square&logo=php)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/andrzejkupczyk/mantisbt-todolists?sort=semver&style=flat-square)
+[![GitHub license](https://img.shields.io/github/license/andrzejkupczyk/mantisbt-todolists?style=flat-square)](https://github.com/andrzejkupczyk/mantisbt-todolists/blob/main/LICENSE "License")
+
+To-do lists plugin for [Mantis Bug Tracker](https://www.mantisbt.org/). 
 Allows users (e.g. developers) to manage to-do tasks within a bug report.
 
-| MantisBT | Plugin                                                                         |
-|----------|--------------------------------------------------------------------------------|
-| v2.x     | [v2](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/latest)     |
-| v1.3.x   | [v1](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/tag/v1.2.2) |
+| MantisBT | Plugin                                                                                               |
+|----------|------------------------------------------------------------------------------------------------------|
+| v2.5.x   | [**latest**](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/latest)                   |
+| v2.x     | [v2](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/tag/v2.5.0) (security fixes only) |
+| v1.3.x   | [v1](https://github.com/andrzejkupczyk/mantisbt-todolists/releases/tag/v1.2.2) (unmaintained)        |
 
-## Install
+## Installation
 
-### Manually
+MantisBT To-Do Lists is packaged with [Composer](https://getcomposer.org/) which installs the plugin to the `plugins/ToDoLists` directory:
 
-- Download or clone the repository and place it under the MantisBT plugins folder.
-- Rename the folder to ToDoLists
-- Go to Manage - Manage Plugins and install the plugin
-
-### Using Composer
-
-If you are using [composer/installers](https://github.com/composer/installers) to simplify plugin management, run:  
-`composer require andrzejkupczyk/mantis-todolists`
+`composer require webgarden/mantisbt-todolists`
 
 ## Functionality
 

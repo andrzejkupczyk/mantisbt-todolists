@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Mantis\ToDoLists\Http;
+namespace WebGarden\ToDoLists\Http;
 
 use RuntimeException;
 
@@ -20,7 +20,10 @@ class SanitizedUserInput
         return $this->parameters;
     }
 
-    public function get(string $name)
+    /**
+     * @param string $name
+     */
+    public function get($name)
     {
         if ($this->has($name)) {
             return $this->parameters[$name];
@@ -29,12 +32,18 @@ class SanitizedUserInput
         throw new RuntimeException("Parameter `{$name}` does not exist");
     }
 
-    public function has(string $name): bool
+    /**
+     * @param string $name
+     */
+    public function has($name): bool
     {
         return array_key_exists($name, $this->all());
     }
 
-    public function only(string ...$names): array
+    /**
+     * @param string ...$names
+     */
+    public function only(...$names): array
     {
         return array_intersect_key($this->all(), array_flip($names));
     }

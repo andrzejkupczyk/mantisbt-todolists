@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Mantis\ToDoLists\Http;
+namespace WebGarden\ToDoLists\Http;
 
-use Mantis\ToDoLists\Database\TasksRepository;
+use WebGarden\ToDoLists\Database\TasksRepository;
 
 class Controller
 {
     /**
-     * @var \Mantis\ToDoLists\Database\TasksRepository
+     * @var \WebGarden\ToDoLists\Database\TasksRepository
      */
     protected $repository;
 
@@ -20,8 +20,9 @@ class Controller
 
     /**
      * @return void
+     * @param \WebGarden\ToDoLists\Http\Request $request
      */
-    public function create(Request $request)
+    public function create($request)
     {
         $descriptions = array_filter(explode(PHP_EOL, $request['description']));
 
@@ -35,8 +36,9 @@ class Controller
 
     /**
      * @return void
+     * @param \WebGarden\ToDoLists\Http\Request $request
      */
-    public function update(Request $request)
+    public function update($request)
     {
         $parameters = $request->parameters()->only('id', 'finished', 'description');
 
@@ -49,8 +51,9 @@ class Controller
 
     /**
      * @return void
+     * @param \WebGarden\ToDoLists\Http\Request $request
      */
-    public function delete(Request $request)
+    public function delete($request)
     {
         $this->repository->delete($request['id']);
     }

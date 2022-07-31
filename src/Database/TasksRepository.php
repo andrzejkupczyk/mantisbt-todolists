@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Mantis\ToDoLists\Database;
+namespace WebGarden\ToDoLists\Database;
 
 use MantisMarkdown;
 
@@ -22,8 +22,9 @@ class TasksRepository
 
     /**
      * @return bool|\IteratorAggregate
+     * @param int $taskId
      */
-    public function delete(int $taskId)
+    public function delete($taskId)
     {
         $query = "DELETE FROM $this->table WHERE id = " . db_param();
 
@@ -32,15 +33,20 @@ class TasksRepository
 
     /**
      * @return bool|\IteratorAggregate
+     * @param int $bugId
      */
-    public function deleteAssociatedToBug(int $bugId)
+    public function deleteAssociatedToBug($bugId)
     {
         $query = "DELETE FROM $this->table WHERE bug_id = " . db_param();
 
         return db_query($query, [$bugId]);
     }
 
-    public function fetch(string $query, array $params = []): array
+    /**
+     * @param string $query
+     * @param mixed[] $params
+     */
+    public function fetch($query, $params = []): array
     {
         $result = db_query($query, $params);
 
@@ -53,24 +59,32 @@ class TasksRepository
 
     /**
      * @return null|array
+     * @param int $taskId
      */
-    public function findById(int $taskId)
+    public function findById($taskId)
     {
         $results = $this->fetch("SELECT * FROM $this->table WHERE id = " . db_param() . ' LIMIT 1', [$taskId]);
 
         return $results ? $this->normalizeTask($results[0]) : null;
     }
 
-    public function findByBug(int $bugId): array
+    /**
+     * @param int $bugId
+     */
+    public function findByBug($bugId): array
     {
         $query = "SELECT * FROM $this->table WHERE bug_id = " . db_param() . ' ORDER BY id';
 
         return array_map([$this, 'normalizeTask'], $this->fetch($query, [$bugId]));
     }
 
-    public function insert(array $data): array
+    /**
+     * @param mixed[] $data
+     */
+    public function insert($data): array
     {
-        extract($this->prepareInput($data));
+        $prepareInput = $this->prepareInput($data);
+        extract($prepareInput);
 
         $query = "INSERT INTO $this->table (bug_id, description) VALUES (" . db_param() . ', ' . db_param() . ')';
 
@@ -92,9 +106,15 @@ class TasksRepository
         return $task;
     }
 
-    public function update(array $data): array
+    /**
+     * @param mixed[] $data
+     */
+    public function update($data): array
     {
-        extract($this->prepareInput($data));
+        $finished = null;
+        $id = null;
+        $prepareInput = $this->prepareInput($data);
+        extract($prepareInput);
 
         $query = "UPDATE $this->table SET description = " . db_param() . ', finished = ' . db_param() . ' WHERE id = ' . db_param();
         db_query($query, [$description, (int) $finished, $id]);
@@ -108,7 +128,10 @@ class TasksRepository
         return $task;
     }
 
-    protected function normalizeTask(array $task): array
+    /**
+     * @param mixed[] $task
+     */
+    protected function normalizeTask($task): array
     {
         $task['id'] = (int) $task['id'];
         $task['bug_id'] = (int) $task['bug_id'];

@@ -1,9 +1,5 @@
-!/vendor/autoload.php
-!/vendor/composer
 .env
-.php-cs-fixer.cache
 /.idea
 /node_modules
-/tools
-/vendor/*
+/vendor
 composer.lock

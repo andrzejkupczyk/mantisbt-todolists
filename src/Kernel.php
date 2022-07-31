@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Mantis\ToDoLists;
+namespace WebGarden\ToDoLists;
 
-use Mantis\ToDoLists\Http\Request;
-use Mantis\ToDoLists\Routing\Router;
+use WebGarden\ToDoLists\Http\Request;
+use WebGarden\ToDoLists\Routing\Router;
 
 class Kernel
 {
     /**
-     * @var \Mantis\ToDoLists\Routing\Router
+     * @var \WebGarden\ToDoLists\Routing\Router
      */
     protected $router;
 
@@ -19,7 +19,10 @@ class Kernel
         $this->router = $router;
     }
 
-    public function handle(Request $request)
+    /**
+     * @param \WebGarden\ToDoLists\Http\Request $request
+     */
+    public function handle($request)
     {
         $route = $this->router->route($request->method());
 

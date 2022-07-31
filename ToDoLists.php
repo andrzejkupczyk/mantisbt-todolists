@@ -2,27 +2,34 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
-use Mantis\ToDoLists\Database\TasksRepository;
+use JetBrains\PhpStorm\ArrayShape;
+use Slim\App;
+use WebGarden\Termite\TermitePlugin;
+use WebGarden\ToDoLists\Database\TasksRepository;
+use WebGarden\ToDoLists\Http\Controller;
 
-class ToDoListsPlugin extends MantisPlugin
+class ToDoListsPlugin extends TermitePlugin
 {
-    const VERSION = '2.6.0';
+    const VERSION = '3.0.0';
 
     /**
-     * @var \Mantis\ToDoLists\Database\TasksRepository
+     * @var \WebGarden\ToDoLists\Http\Controller
+     */
+    protected $controller;
+
+    /**
+     * @var \WebGarden\ToDoLists\Database\TasksRepository
      */
     protected $repository;
 
     public function register()
     {
-        $this->name = plugin_lang_get('name');
-        $this->description = plugin_lang_get('description');
-        $this->page = 'config';
+        parent::register();
 
+        $this->page = 'config';
         $this->version = self::VERSION;
-        $this->requires = ['MantisCore' => '2.0.0'];
 
         $this->author = 'Andrzej Kupczyk';
         $this->contact = 'kontakt@andrzejkupczyk.pl';
@@ -31,6 +38,7 @@ class ToDoListsPlugin extends MantisPlugin
 
     public function init()
     {
+        $this->controller = new Controller();
         $this->repository = new TasksRepository();
     }
 
@@ -55,9 +63,10 @@ class ToDoListsPlugin extends MantisPlugin
     {
         $events = [
             'EVENT_BUG_DELETED' => 'deleteTasks',
+            'EVENT_REST_API_ROUTES' => 'handleRestApiRoutes',
+            'EVENT_TODOLISTS_REQUEST_HANDLED' => 'displayTasks',
             'EVENT_TODOLISTS_TASK_CREATED' => 'addLogEntry',
             'EVENT_TODOLISTS_TASK_UPDATED' => 'addLogEntry',
-            'EVENT_TODOLISTS_REQUEST_HANDLED' => 'displayTasks',
         ];
 
         if (is_page_name('view.php') || is_page_name('bug_reminder')) {
@@ -97,12 +106,20 @@ class ToDoListsPlugin extends MantisPlugin
         ];
     }
 
-    public function deleteTasks(string $event, int $bugId)
+    /**
+     * @param string $event
+     * @param int $bugId
+     */
+    public function deleteTasks($event, $bugId)
     {
         $this->repository->deleteAssociatedToBug($bugId);
     }
 
-    public function displayTasks(string $event, int $bugId)
+    /**
+     * @param string $event
+     * @param int $bugId
+     */
+    public function displayTasks($event, $bugId)
     {
         $tasks = $this->repository->findByBug($bugId);
         $canManage = access_has_project_level(plugin_config_get('manage_threshold'));
@@ -116,7 +133,11 @@ class ToDoListsPlugin extends MantisPlugin
         }
     }
 
-    public function addLogEntry(string $event, array $data)
+    /**
+     * @param string $event
+     * @param mixed[] $data
+     */
+    public function addLogEntry($event, $data)
     {
         $fieldName = strtolower(str_replace('EVENT_TODOLISTS_', '', $event));
 
@@ -137,5 +158,23 @@ class ToDoListsPlugin extends MantisPlugin
     public function cspHeaders()
     {
         http_csp_add('script-src', "'unsafe-eval'");
+    }
+
+    /**
+     * @param array $payload
+     * @param string $event
+     *
+     * @return void
+     */
+    public function handleRestApiRoutes(
+        $event,
+        #[ArrayShape(['app' => App::class])] $payload
+    ) {
+        $payload['app']->group(
+            plugin_route_group(),
+            function (App $app)  {
+                $app->post('/tasks', [$this->controller, 'castVote']);
+            }
+        );
     }
 }

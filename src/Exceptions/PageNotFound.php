@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Mantis\ToDoLists\Exceptions;
+namespace WebGarden\ToDoLists\Exceptions;
 
 use Mantis\Exceptions\ClientException;
 

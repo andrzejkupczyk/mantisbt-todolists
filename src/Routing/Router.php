@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Mantis\ToDoLists\Routing;
+namespace WebGarden\ToDoLists\Routing;
 
-use Mantis\ToDoLists\Exceptions\PageNotFound;
+use WebGarden\ToDoLists\Exceptions\PageNotFound;
 
 class Router
 {
@@ -19,9 +19,10 @@ class Router
     }
 
     /**
-     * @throws \Mantis\ToDoLists\Exceptions\PageNotFound
+     * @throws \WebGarden\ToDoLists\Exceptions\PageNotFound
+     * @param string $name
      */
-    public function route(string $name): Route
+    public function route($name): Route
     {
         if (!$this->hasRoute($name)) {
             throw new PageNotFound($name);
@@ -30,7 +31,10 @@ class Router
         return new Route($this->routes[$name]);
     }
 
-    protected function hasRoute(string $name): bool
+    /**
+     * @param string $name
+     */
+    protected function hasRoute($name): bool
     {
         return isset($this->routes[$name]);
     }
