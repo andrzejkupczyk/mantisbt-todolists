@@ -21,8 +21,9 @@ class TasksRepository
     }
 
     /**
-     * @return bool|\IteratorAggregate
      * @param int $taskId
+     *
+     * @return bool|\IteratorAggregate
      */
     public function delete($taskId)
     {
@@ -32,8 +33,9 @@ class TasksRepository
     }
 
     /**
-     * @return bool|\IteratorAggregate
      * @param int $bugId
+     *
+     * @return bool|\IteratorAggregate
      */
     public function deleteAssociatedToBug($bugId)
     {
@@ -44,7 +46,7 @@ class TasksRepository
 
     /**
      * @param string $query
-     * @param mixed[] $params
+     * @param array $params
      */
     public function fetch($query, $params = []): array
     {
@@ -58,8 +60,9 @@ class TasksRepository
     }
 
     /**
-     * @return null|array
      * @param int $taskId
+     *
+     * @return null|array
      */
     public function findById($taskId)
     {
@@ -79,7 +82,7 @@ class TasksRepository
     }
 
     /**
-     * @param mixed[] $data
+     * @param array $data
      */
     public function insert($data): array
     {
@@ -107,12 +110,13 @@ class TasksRepository
     }
 
     /**
-     * @param mixed[] $data
+     * @param array $data
+     *
+     * @return void
      */
-    public function update($data): array
+    public function update($data)
     {
-        $finished = null;
-        $id = null;
+        $id = $finished = null;
         $prepareInput = $this->prepareInput($data);
         extract($prepareInput);
 
@@ -124,18 +128,16 @@ class TasksRepository
         if (db_affected_rows()) {
             event_signal('EVENT_TODOLISTS_TASK_UPDATED', [$task]);
         }
-
-        return $task;
     }
 
     /**
-     * @param mixed[] $task
+     * @param array $task
      */
     protected function normalizeTask($task): array
     {
         $task['id'] = (int) $task['id'];
         $task['bug_id'] = (int) $task['bug_id'];
-        $task['finished'] = in_array($task['finished'], ['t', '1'], true);
+        $task['finished'] = in_array($task['finished'], ['t', '1']);
         $task['descriptionHtml'] = mention_format_text(
             MantisMarkdown::convert_line($task['description'])
         );
@@ -149,7 +151,7 @@ class TasksRepository
             $input['bug_id'] = (int) $input['bug_id'];
         }
         $input['description'] = strip_tags($input['description']);
-        $input['finished'] = $input['finished'] ?? false;
+        $input['finished'] = filter_var($input['finished'] ?? false, FILTER_VALIDATE_BOOLEAN);
 
         return $input;
     }

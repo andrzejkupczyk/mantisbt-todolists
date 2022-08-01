@@ -15,9 +15,19 @@ Allows users (e.g. developers) to manage to-do tasks within a bug report.
 
 ## Installation
 
-MantisBT To-Do Lists is packaged with [Composer](https://getcomposer.org/) which installs the plugin to the `plugins/ToDoLists` directory:
+MantisBT To-Do Lists plugin is packaged with [Composer](https://getcomposer.org/)
+and uses [composer installers](https://github.com/composer/installers) library
+to install the plugin in the `plugins/ToDoLists` directory:
 
 `composer require webgarden/mantisbt-todolists`
+
+### Old school alternative
+
+If you prefer to avoid modifying the original MantisBT `composer.json` file,
+you can follow these steps:
+- download or clone the repository and place it under the MantisBT plugins folder
+- rename the folder to ToDoLists
+- cd into plugin's folder and run `composer install --no-dev`
 
 ## Functionality
 

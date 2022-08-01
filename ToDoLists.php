@@ -2,13 +2,18 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/../../vendor/autoload.php';
-
 use JetBrains\PhpStorm\ArrayShape;
 use Slim\App;
+use WebGarden\Termite\Http\Middleware\DetermineCurrentPlugin;
 use WebGarden\Termite\TermitePlugin;
 use WebGarden\ToDoLists\Database\TasksRepository;
 use WebGarden\ToDoLists\Http\Controller;
+
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
+} else {
+    require_once __DIR__ . '/../../vendor/autoload.php';
+}
 
 class ToDoListsPlugin extends TermitePlugin
 {
@@ -53,9 +58,9 @@ class ToDoListsPlugin extends TermitePlugin
     public function events(): array
     {
         return [
+            'EVENT_TODOLISTS_REQUEST_HANDLED' => EVENT_TYPE_EXECUTE,
             'EVENT_TODOLISTS_TASK_CREATED' => EVENT_TYPE_EXECUTE,
             'EVENT_TODOLISTS_TASK_UPDATED' => EVENT_TYPE_EXECUTE,
-            'EVENT_TODOLISTS_REQUEST_HANDLED' => EVENT_TYPE_EXECUTE,
         ];
     }
 
@@ -63,7 +68,7 @@ class ToDoListsPlugin extends TermitePlugin
     {
         $events = [
             'EVENT_BUG_DELETED' => 'deleteTasks',
-            'EVENT_REST_API_ROUTES' => 'handleRestApiRoutes',
+            'EVENT_REST_API_ROUTES' => 'routes',
             'EVENT_TODOLISTS_REQUEST_HANDLED' => 'displayTasks',
             'EVENT_TODOLISTS_TASK_CREATED' => 'addLogEntry',
             'EVENT_TODOLISTS_TASK_UPDATED' => 'addLogEntry',
@@ -71,10 +76,9 @@ class ToDoListsPlugin extends TermitePlugin
 
         if (is_page_name('view.php') || is_page_name('bug_reminder')) {
             $events += [
-                'EVENT_CORE_HEADERS' => 'cspHeaders',
                 'EVENT_LAYOUT_PAGE_FOOTER' => 'scripts',
-                'EVENT_VIEW_BUG_DETAILS' => 'displayTasks',
                 'EVENT_LAYOUT_RESOURCES' => 'styles',
+                'EVENT_VIEW_BUG_DETAILS' => 'displayTasks',
             ];
         }
 
@@ -109,6 +113,8 @@ class ToDoListsPlugin extends TermitePlugin
     /**
      * @param string $event
      * @param int $bugId
+     *
+     * @return void
      */
     public function deleteTasks($event, $bugId)
     {
@@ -118,6 +124,8 @@ class ToDoListsPlugin extends TermitePlugin
     /**
      * @param string $event
      * @param int $bugId
+     *
+     * @return void
      */
     public function displayTasks($event, $bugId)
     {
@@ -135,7 +143,9 @@ class ToDoListsPlugin extends TermitePlugin
 
     /**
      * @param string $event
-     * @param mixed[] $data
+     * @param array $data
+     *
+     * @return void
      */
     public function addLogEntry($event, $data)
     {
@@ -155,26 +165,29 @@ class ToDoListsPlugin extends TermitePlugin
             '<script type="text/javascript" src="' . plugin_file('todolists.min.js') . '"></script>';
     }
 
-    public function cspHeaders()
-    {
-        http_csp_add('script-src', "'unsafe-eval'");
-    }
-
     /**
-     * @param array $payload
      * @param string $event
+     * @param array $payload
      *
      * @return void
      */
-    public function handleRestApiRoutes(
+    public function routes(
         $event,
         #[ArrayShape(['app' => App::class])] $payload
     ) {
+        $plugin = $this;
+
+        $payload['app']->getContainer()[TasksRepository::class] = function () {
+            return new TasksRepository();
+        };
+
         $payload['app']->group(
             plugin_route_group(),
-            function (App $app)  {
-                $app->post('/tasks', [$this->controller, 'castVote']);
+            function (App $app) use ($plugin) {
+                $app->post('/tasks', [$plugin->controller, 'create']);
+                $app->put('/tasks', [$plugin->controller, 'update']);
+                $app->delete('/tasks', [$plugin->controller, 'delete']);
             }
-        );
+        )->add(new DetermineCurrentPlugin());
     }
 }
