@@ -1,6 +1,6 @@
 {
     "name": "webgarden/mantisbt-todolists",
-    "description": "To-Do Lists Plugin for Mantis Bug Tracker",
+    "description": "To-Do Lists Plugin for MantisBT",
     "type": "mantisbt-plugin",
     "license": "Apache-2.0",
     "authors": [
@@ -42,12 +42,15 @@
         "sort-packages": true,
         "platform": {
             "php": "7.0.0"
+        },
+        "allow-plugins": {
+            "composer/installers": true
         }
     },
     "extra": {
         "installer-name": "ToDoLists",
         "branch-alias": {
-            "dev-master": "3.0-dev"
+            "dev-master": "3.x-dev"
         }
     },
     "minimum-stability": "dev"
