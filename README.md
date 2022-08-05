@@ -2,7 +2,7 @@
 
 ![PHP requirement](https://img.shields.io/packagist/php-v/andrzejkupczyk/mantis-todolists?style=flat-square&logo=php)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/andrzejkupczyk/mantisbt-todolists?sort=semver&style=flat-square)
-[![GitHub license](https://img.shields.io/github/license/andrzejkupczyk/mantisbt-todolists?style=flat-square)](https://github.com/andrzejkupczyk/mantisbt-todolists/blob/main/LICENSE "License")
+[![GitHub license](https://img.shields.io/github/license/andrzejkupczyk/mantisbt-todolists?style=flat-square)](https://github.com/andrzejkupczyk/mantisbt-todolists/blob/master/LICENSE "License")
 
 To-do lists plugin for [Mantis Bug Tracker](https://www.mantisbt.org/). 
 Allows users (e.g. developers) to manage to-do tasks within a bug report.
