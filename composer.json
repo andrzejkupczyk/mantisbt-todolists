@@ -1,8 +1,8 @@
 {
-    "name": "andrzejkupczyk/mantis-todolists",
-    "description": "To-Do Lists Plugin for Mantis Bug Tracker",
+    "name": "webgarden/mantisbt-todolists",
+    "description": "To-Do Lists Plugin for MantisBT",
     "type": "mantisbt-plugin",
-    "license": "MIT",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Andrzej Kupczyk",
@@ -10,43 +10,47 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/andrzejkupczyk/mantis-todolists/issues"
+        "issues": "https://github.com/andrzejkupczyk/mantisbt-todolists/issues"
     },
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/mantisbt/mantisbt"
+            "url": "https://github.com/mantisbt/mantisbt",
+            "no-api": true
         },
         {
             "type": "vcs",
-            "url": "https://github.com/mantisbt/securimage"
+            "url": "https://github.com/mantisbt/securimage",
+            "no-api": true
         }
     ],
     "require": {
         "php": "^7.0 || ^8.0",
-        "ext-json": "*"
+        "composer/installers": "~1.0",
+        "webgarden/mantisbt-termite": "^1.0"
     },
     "require-dev": {
         "mantisbt/mantisbt": "dev-master"
     },
     "autoload": {
         "psr-4": {
-            "Mantis\\ToDoLists\\": "src"
+            "WebGarden\\ToDoLists\\": "src"
         }
     },
-    "scripts": {
-        "analyse": "@fix --dry-run",
-        "fix": "@php tools/php-cs-fixer fix --diff"
-    },
     "config": {
-        "optimize-autoloader": true
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "3.0-dev"
-        },
+        "optimize-autoloader": true,
+        "sort-packages": true,
         "platform": {
             "php": "7.0.0"
+        },
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    },
+    "extra": {
+        "installer-name": "ToDoLists",
+        "branch-alias": {
+            "dev-master": "3.x-dev"
         }
     },
     "minimum-stability": "dev"

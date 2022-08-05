@@ -1,63 +1,79 @@
-.ToDoLists-counter {
-    font-weight: normal;
+.ToDoLists form {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 4px;
+    justify-content: space-between;
 }
 
-.ToDoLists-form {
+.ToDoLists textarea {
+    flex: 1 1 auto;
+    min-height: 29px;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    resize: vertical;
+}
+
+.ToDoLists-items {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    list-style-type: none;
+    margin: 5px 0;
     padding: 0;
 }
 
-.ToDoLists-form ul, .ToDoLists-form li {
-    margin: 0;
-    padding-left: 0;
-}
-
-.ToDoLists-form ul {
-    list-style-type: none;
-    margin-top: 10px;
-}
-
-.ToDoLists-form li {
-    line-height: 20px;
-    text-align: justify;
-    position: relative;
-    padding: 0 10px 0 18px;
-}
-
-.ToDoLists-form input[type="checkbox"] {
-    left: 0;
-    top: 4px;
-    position: absolute;
-    margin: 0;
-}
-
-.ToDoLists-form label {
-    cursor: pointer;
+.ToDoLists-item {
+    align-content: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     font-size: 13px;
+    justify-content: space-between;
 }
 
-.ToDoLists-form span.ToDoLists-task-actions a {
-    visibility: hidden;
+.ToDoLists-item::before {
+    font-family: FontAwesome;
+    font-size: larger;
+    height: 20px;
 }
 
-.ToDoLists-form li:hover a {
-    visibility: visible;
+.ToDoLists-item.finished::before {
+    content: "\f046";
+    margin-right: 4px;
 }
 
-.ToDoLists-form a {
-    text-decoration: none;
+.ToDoLists-item.unfinished::before {
+    content: "\f096";
+    margin-right: 6px;
+}
+
+.ToDoLists-item .description {
+    color: #337ab7;
+    flex: auto;
+}
+
+.ToDoLists-item:hover .description {
+    color: #23527c;
     cursor: pointer;
 }
 
-.ToDoLists-form .finished {
+.ToDoLists-item.finished .description {
     text-decoration: line-through;
 }
 
-.ToDoLists-add-new {
-    resize: none;
-    overflow: hidden;
-    overflow-wrap: break-word;
+.ToDoLists-item .actions {
+    margin-left: 10px;
+    user-select: none;
+    visibility: hidden;
+    white-space: nowrap;
 }
 
-[v-cloak] {
-    display: none;
+.ToDoLists-item:hover .actions {
+    visibility: visible;
+}
+
+.ToDoLists-item .actions a {
+    padding: 2px;
+    text-decoration: none;
 }
