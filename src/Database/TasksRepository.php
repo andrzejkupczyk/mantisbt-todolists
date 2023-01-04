@@ -21,11 +21,9 @@ class TasksRepository
     }
 
     /**
-     * @param int $taskId
-     *
      * @return bool|\IteratorAggregate
      */
-    public function delete($taskId)
+    public function delete(string $taskId)
     {
         $query = "DELETE FROM $this->table WHERE id = " . db_param();
 
@@ -33,22 +31,16 @@ class TasksRepository
     }
 
     /**
-     * @param int $bugId
-     *
      * @return bool|\IteratorAggregate
      */
-    public function deleteAssociatedToBug($bugId)
+    public function deleteAssociatedToBug(int $bugId)
     {
         $query = "DELETE FROM $this->table WHERE bug_id = " . db_param();
 
         return db_query($query, [$bugId]);
     }
 
-    /**
-     * @param string $query
-     * @param array $params
-     */
-    public function fetch($query, $params = []): array
+    public function fetch(string $query, array $params = []): array
     {
         $result = db_query($query, $params);
 
@@ -60,31 +52,23 @@ class TasksRepository
     }
 
     /**
-     * @param int $taskId
-     *
      * @return null|array
      */
-    public function findById($taskId)
+    public function findById(int $taskId)
     {
         $results = $this->fetch("SELECT * FROM $this->table WHERE id = " . db_param() . ' LIMIT 1', [$taskId]);
 
         return $results ? $this->normalizeTask($results[0]) : null;
     }
 
-    /**
-     * @param int $bugId
-     */
-    public function findByBug($bugId): array
+    public function findByBug(int $bugId): array
     {
         $query = "SELECT * FROM $this->table WHERE bug_id = " . db_param() . ' ORDER BY id';
 
         return array_map([$this, 'normalizeTask'], $this->fetch($query, [$bugId]));
     }
 
-    /**
-     * @param array $data
-     */
-    public function insert($data): array
+    public function insert(array $data): array
     {
         $prepareInput = $this->prepareInput($data);
         extract($prepareInput);
@@ -110,11 +94,9 @@ class TasksRepository
     }
 
     /**
-     * @param array $data
-     *
      * @return void
      */
-    public function update($data)
+    public function update(array $data)
     {
         $id = $finished = null;
         $prepareInput = $this->prepareInput($data);
@@ -130,10 +112,7 @@ class TasksRepository
         }
     }
 
-    /**
-     * @param array $task
-     */
-    protected function normalizeTask($task): array
+    protected function normalizeTask(array $task): array
     {
         $task['id'] = (int) $task['id'];
         $task['bug_id'] = (int) $task['bug_id'];
