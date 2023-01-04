@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use JetBrains\PhpStorm\ArrayShape;
 use Slim\App;
-use WebGarden\Termite\Http\Middleware\DetermineCurrentPlugin;
 use WebGarden\Termite\TermitePlugin;
 use WebGarden\ToDoLists\Database\TasksRepository;
 use WebGarden\ToDoLists\Http\Controller;
@@ -130,7 +129,7 @@ class ToDoListsPlugin extends TermitePlugin
     public function displayTasks($event, $bugId)
     {
         $tasks = $this->repository->findByBug($bugId);
-        $canManage = access_has_project_level(plugin_config_get('manage_threshold'));
+        $canManage = $this->canManage();
 
         if ($event === 'EVENT_VIEW_BUG_DETAILS') {
             include_once 'pages/partials/todolist.php';
@@ -175,19 +174,21 @@ class ToDoListsPlugin extends TermitePlugin
         $event,
         #[ArrayShape(['app' => App::class])] $payload
     ) {
+        if (!$this->canManage()) {
+            return;
+        }
+
         $plugin = $this;
 
-        $payload['app']->getContainer()[TasksRepository::class] = function () {
-            return new TasksRepository();
-        };
+        $payload['app']->group(plugin_route_group(), function (App $app) use ($plugin) {
+            $app->post('/tasks', [$plugin->controller, 'create']);
+            $app->put('/tasks', [$plugin->controller, 'update']);
+            $app->delete('/tasks', [$plugin->controller, 'delete']);
+        });
+    }
 
-        $payload['app']->group(
-            plugin_route_group(),
-            function (App $app) use ($plugin) {
-                $app->post('/tasks', [$plugin->controller, 'create']);
-                $app->put('/tasks', [$plugin->controller, 'update']);
-                $app->delete('/tasks', [$plugin->controller, 'delete']);
-            }
-        )->add(new DetermineCurrentPlugin());
+    private function canManage(): bool
+    {
+        return access_has_project_level(plugin_config_get('manage_threshold'));
     }
 }

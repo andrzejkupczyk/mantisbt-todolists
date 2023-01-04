@@ -15,10 +15,6 @@ class Controller
 
     public function __construct(TasksRepository $repository = null)
     {
-        if (!access_has_project_level(plugin_config_get('manage_threshold'))) {
-            access_denied();
-        }
-
         $this->repository = $repository ?: new TasksRepository();
     }
 
