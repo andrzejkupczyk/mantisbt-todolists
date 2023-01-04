@@ -31,7 +31,8 @@
         "webgarden/mantisbt-termite": "^1.0"
     },
     "require-dev": {
-        "mantisbt/mantisbt": "dev-master"
+        "mantisbt/mantisbt": "dev-master",
+        "phpstan/phpstan": "1.9.x-dev"
     },
     "autoload": {
         "psr-4": {
