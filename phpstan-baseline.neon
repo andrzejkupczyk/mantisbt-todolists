@@ -1,0 +1,6 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Cannot call method GetArray\\(\\) on bool\\|IteratorAggregate\\.$#"
+			count: 1
+			path: src/Database/TasksRepository.php

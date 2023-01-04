@@ -21,11 +21,9 @@ class TasksRepository
     }
 
     /**
-     * @param int $taskId
-     *
      * @return bool|\IteratorAggregate
      */
-    public function delete($taskId)
+    public function delete(string $taskId)
     {
         $query = "DELETE FROM $this->table WHERE id = " . db_param();
 
@@ -33,22 +31,16 @@ class TasksRepository
     }
 
     /**
-     * @param int $bugId
-     *
      * @return bool|\IteratorAggregate
      */
-    public function deleteAssociatedToBug($bugId)
+    public function deleteAssociatedToBug(int $bugId)
     {
         $query = "DELETE FROM $this->table WHERE bug_id = " . db_param();
 
         return db_query($query, [$bugId]);
     }
 
-    /**
-     * @param string $query
-     * @param array $params
-     */
-    public function fetch($query, $params = []): array
+    public function fetch(string $query, array $params = []): array
     {
         $result = db_query($query, $params);
 
@@ -60,38 +52,29 @@ class TasksRepository
     }
 
     /**
-     * @param int $taskId
-     *
      * @return null|array
      */
-    public function findById($taskId)
+    public function findById(int $taskId)
     {
         $results = $this->fetch("SELECT * FROM $this->table WHERE id = " . db_param() . ' LIMIT 1', [$taskId]);
 
         return $results ? $this->normalizeTask($results[0]) : null;
     }
 
-    /**
-     * @param int $bugId
-     */
-    public function findByBug($bugId): array
+    public function findByBug(int $bugId): array
     {
         $query = "SELECT * FROM $this->table WHERE bug_id = " . db_param() . ' ORDER BY id';
 
         return array_map([$this, 'normalizeTask'], $this->fetch($query, [$bugId]));
     }
 
-    /**
-     * @param array $data
-     */
-    public function insert($data): array
+    public function insert(array $data): array
     {
-        $prepareInput = $this->prepareInput($data);
-        extract($prepareInput);
+        $input = $this->prepareInput($data);
 
         $query = "INSERT INTO $this->table (bug_id, description) VALUES (" . db_param() . ', ' . db_param() . ')';
 
-        db_query($query, [$bug_id, $description]);
+        db_query($query, [$input['bug_id'], $input['description']]);
 
         if (!$taskId = db_insert_id($this->table)) {
             return [];
@@ -99,9 +82,9 @@ class TasksRepository
 
         $task = $this->normalizeTask([
             'id' => $taskId,
-            'bug_id' => $bug_id,
-            'finished' => $finished,
-            'description' => $description,
+            'bug_id' => $input['bug_id'],
+            'finished' => $input['finished'],
+            'description' => $input['description'],
         ]);
 
         event_signal('EVENT_TODOLISTS_TASK_CREATED', [$task]);
@@ -110,41 +93,39 @@ class TasksRepository
     }
 
     /**
-     * @param array $data
-     *
      * @return void
      */
-    public function update($data)
+    public function update(array $data)
     {
-        $id = $finished = null;
-        $prepareInput = $this->prepareInput($data);
-        extract($prepareInput);
+        $input = $this->prepareInput($data);
 
         $query = "UPDATE $this->table SET description = " . db_param() . ', finished = ' . db_param() . ' WHERE id = ' . db_param();
-        db_query($query, [$description, (int) $finished, $id]);
+        db_query($query, [$input['description'], (int) $input['finished'], $input['id']]);
 
-        $task = $this->findById((int) $id);
+        $task = $this->findById((int) $input['id']);
 
         if (db_affected_rows()) {
             event_signal('EVENT_TODOLISTS_TASK_UPDATED', [$task]);
         }
     }
 
-    /**
-     * @param array $task
-     */
-    protected function normalizeTask($task): array
+    protected function normalizeTask(array $task): array
     {
         $task['id'] = (int) $task['id'];
         $task['bug_id'] = (int) $task['bug_id'];
         $task['finished'] = in_array($task['finished'], ['t', '1']);
         $task['descriptionHtml'] = mention_format_text(
-            MantisMarkdown::convert_line($task['description'])
+            class_exists(MantisMarkdown::class)
+                ? MantisMarkdown::convert_line($task['description'])
+                : $task['description']
         );
 
         return $task;
     }
 
+    /**
+     * @return array{id: string, bug_id: int, description: string, finished: bool}
+     */
     private function prepareInput(array $input): array
     {
         if (array_key_exists('bug_id', $input)) {

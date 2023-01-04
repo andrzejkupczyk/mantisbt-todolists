@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use JetBrains\PhpStorm\ArrayShape;
 use Slim\App;
 use WebGarden\Termite\TermitePlugin;
 use WebGarden\ToDoLists\Database\TasksRepository;
@@ -26,7 +25,7 @@ class ToDoListsPlugin extends TermitePlugin
     /**
      * @var \WebGarden\ToDoLists\Database\TasksRepository
      */
-    protected $repository;
+    protected $tasks;
 
     public function register()
     {
@@ -43,7 +42,7 @@ class ToDoListsPlugin extends TermitePlugin
     public function init()
     {
         $this->controller = new Controller();
-        $this->repository = new TasksRepository();
+        $this->tasks = new TasksRepository();
     }
 
     public function config(): array
@@ -110,25 +109,19 @@ class ToDoListsPlugin extends TermitePlugin
     }
 
     /**
-     * @param string $event
-     * @param int $bugId
-     *
      * @return void
      */
-    public function deleteTasks($event, $bugId)
+    public function deleteTasks(string $event, int $bugId)
     {
-        $this->repository->deleteAssociatedToBug($bugId);
+        $this->tasks->deleteAssociatedToBug($bugId);
     }
 
     /**
-     * @param string $event
-     * @param int $bugId
-     *
      * @return void
      */
-    public function displayTasks($event, $bugId)
+    public function displayTasks(string $event, int $bugId)
     {
-        $tasks = $this->repository->findByBug($bugId);
+        $tasks = $this->tasks->findByBug($bugId);
         $canManage = $this->canManage();
 
         if ($event === 'EVENT_VIEW_BUG_DETAILS') {
@@ -141,12 +134,9 @@ class ToDoListsPlugin extends TermitePlugin
     }
 
     /**
-     * @param string $event
-     * @param array $data
-     *
      * @return void
      */
-    public function addLogEntry($event, $data)
+    public function addLogEntry(string $event, array $data)
     {
         $fieldName = strtolower(str_replace('EVENT_TODOLISTS_', '', $event));
 
@@ -165,15 +155,12 @@ class ToDoListsPlugin extends TermitePlugin
     }
 
     /**
-     * @param string $event
-     * @param array $payload
+     * @param array{app: \Slim\App} $payload
      *
      * @return void
      */
-    public function routes(
-        $event,
-        #[ArrayShape(['app' => App::class])] $payload
-    ) {
+    public function routes(string $event, array $payload)
+    {
         if (!$this->canManage()) {
             return;
         }
@@ -189,6 +176,6 @@ class ToDoListsPlugin extends TermitePlugin
 
     private function canManage(): bool
     {
-        return access_has_project_level(plugin_config_get('manage_threshold'));
+        return access_has_project_level((int) plugin_config_get('manage_threshold'));
     }
 }

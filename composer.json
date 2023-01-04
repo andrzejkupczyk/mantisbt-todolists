@@ -26,11 +26,13 @@
     ],
     "require": {
         "php": "^7.0 || ^8.0",
+        "ext-json": "*",
         "composer/installers": "~1.0",
         "webgarden/mantisbt-termite": "^1.0"
     },
     "require-dev": {
-        "mantisbt/mantisbt": "dev-master"
+        "mantisbt/mantisbt": "dev-master",
+        "phpstan/phpstan": "1.9.x-dev"
     },
     "autoload": {
         "psr-4": {
