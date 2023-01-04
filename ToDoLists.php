@@ -15,7 +15,7 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
 
 class ToDoListsPlugin extends TermitePlugin
 {
-    const VERSION = '3.0.0';
+    const VERSION = '3.0.1';
 
     /**
      * @var \WebGarden\ToDoLists\Http\Controller
