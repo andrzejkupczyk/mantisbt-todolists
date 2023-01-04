@@ -70,12 +70,11 @@ class TasksRepository
 
     public function insert(array $data): array
     {
-        $prepareInput = $this->prepareInput($data);
-        extract($prepareInput);
+        $input = $this->prepareInput($data);
 
         $query = "INSERT INTO $this->table (bug_id, description) VALUES (" . db_param() . ', ' . db_param() . ')';
 
-        db_query($query, [$bug_id, $description]);
+        db_query($query, [$input['bug_id'], $input['description']]);
 
         if (!$taskId = db_insert_id($this->table)) {
             return [];
@@ -83,9 +82,9 @@ class TasksRepository
 
         $task = $this->normalizeTask([
             'id' => $taskId,
-            'bug_id' => $bug_id,
-            'finished' => $finished,
-            'description' => $description,
+            'bug_id' => $input['bug_id'],
+            'finished' => $input['finished'],
+            'description' => $input['description'],
         ]);
 
         event_signal('EVENT_TODOLISTS_TASK_CREATED', [$task]);
@@ -98,14 +97,12 @@ class TasksRepository
      */
     public function update(array $data)
     {
-        $id = $finished = null;
-        $prepareInput = $this->prepareInput($data);
-        extract($prepareInput);
+        $input = $this->prepareInput($data);
 
         $query = "UPDATE $this->table SET description = " . db_param() . ', finished = ' . db_param() . ' WHERE id = ' . db_param();
-        db_query($query, [$description, (int) $finished, $id]);
+        db_query($query, [$input['description'], (int) $input['finished'], $input['id']]);
 
-        $task = $this->findById((int) $id);
+        $task = $this->findById((int) $input['id']);
 
         if (db_affected_rows()) {
             event_signal('EVENT_TODOLISTS_TASK_UPDATED', [$task]);
@@ -124,6 +121,9 @@ class TasksRepository
         return $task;
     }
 
+    /**
+     * @return array{id: string, bug_id: int, description: string, finished: bool}
+     */
     private function prepareInput(array $input): array
     {
         if (array_key_exists('bug_id', $input)) {

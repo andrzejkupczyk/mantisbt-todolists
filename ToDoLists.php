@@ -174,6 +174,6 @@ class ToDoListsPlugin extends TermitePlugin
 
     private function canManage(): bool
     {
-        return access_has_project_level(plugin_config_get('manage_threshold'));
+        return access_has_project_level((int) plugin_config_get('manage_threshold'));
     }
 }
