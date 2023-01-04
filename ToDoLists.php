@@ -155,6 +155,8 @@ class ToDoListsPlugin extends TermitePlugin
     }
 
     /**
+     * @param array{app: \Slim\App} $payload
+     *
      * @return void
      */
     public function routes(string $event, array $payload)
