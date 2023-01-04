@@ -115,7 +115,9 @@ class TasksRepository
         $task['bug_id'] = (int) $task['bug_id'];
         $task['finished'] = in_array($task['finished'], ['t', '1']);
         $task['descriptionHtml'] = mention_format_text(
-            MantisMarkdown::convert_line($task['description'])
+            class_exists(MantisMarkdown::class)
+                ? MantisMarkdown::convert_line($task['description'])
+                : $task['description']
         );
 
         return $task;
