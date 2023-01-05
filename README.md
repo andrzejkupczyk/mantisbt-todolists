@@ -1,6 +1,6 @@
 # MantisBT To-Do Lists
 
-![PHP Requirement](https://img.shields.io/packagist/php-v/andrzejkupczyk/mantis-todolists?style=flat-square&logo=php)
+![PHP Requirement](https://img.shields.io/packagist/php-v/webgarden/mantisbt-todolists?style=flat-square&logo=php)
 ![Latest Release](https://img.shields.io/github/v/release/andrzejkupczyk/mantisbt-todolists?sort=semver&style=flat-square)
 ![Licence](https://img.shields.io/github/license/andrzejkupczyk/mantis-todolists?style=flat-square)
 
