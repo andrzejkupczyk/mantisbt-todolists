@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47a6f0090dce52460b1b3c4932ff6271",
+    "content-hash": "b9d8464feca456a37493c3570f8bc442",
     "packages": [
         {
             "name": "composer/installers",
@@ -206,7 +206,7 @@
             "description": "MantisBT plugin development toolkit",
             "support": {
                 "issues": "https://github.com/andrzejkupczyk/termite/issues",
-                "source": "https://github.com/andrzejkupczyk/mantisbt-termite/tree/main"
+                "source": "https://github.com/andrzejkupczyk/mantisbt-termite/tree/v1.0.1"
             },
             "time": "2022-07-31T16:01:38+00:00"
         }
@@ -950,7 +950,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.9.x"
+                "source": "https://github.com/phpstan/phpstan/tree/1.9.7"
             },
             "funding": [
                 {
