@@ -5,7 +5,7 @@
 ![Licence](https://img.shields.io/github/license/andrzejkupczyk/mantis-todolists?style=flat-square)
 
 To-do lists plugin for [Mantis Bug Tracker](https://www.mantisbt.org/). 
-Allows users (e.g. developers) to manage to-do tasks within a bug report.
+Allows users to manage to-do tasks within a bug report. If you find this plugin useful, feel free to try [my other plugins](https://github.com/search?q=user%3Aandrzejkupczyk+topic%3Amantisbt-plugin) as well.
 
 | MantisBT | Plugin                                                                                               |
 |----------|------------------------------------------------------------------------------------------------------|
