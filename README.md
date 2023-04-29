@@ -44,6 +44,7 @@ you can follow these steps:
 Currently supported languages are:
 :de:
 :es:
+:fr:
 :gb:
 :poland:
 :ru:
