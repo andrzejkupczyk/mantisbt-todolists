@@ -1,0 +1,21 @@
+<?php
+
+$s_plugin_ToDoLists_name = 'Liste de tâches';
+$s_plugin_ToDoLists_description = 'Ajoute la possibilité de créer une liste de tâches.';
+$s_plugin_ToDoLists_configuration = 'Configuration';
+
+$s_plugin_ToDoLists_manage_threshold = 'Gestion';
+$s_plugin_ToDoLists_manage_threshold_desc = 'Créer et gérer ses tâches';
+$s_plugin_ToDoLists_view_threshold = 'Afficher';
+$s_plugin_ToDoLists_view_threshold_desc = 'Afficher les tâches créées par les autres utilisateurs';
+
+$s_plugin_ToDoLists_things_to_do = 'À faire';
+$s_plugin_ToDoLists_add = 'Ajouter';
+$s_plugin_ToDoLists_add_new_task = 'Ajouter une nouvelle tâche';
+$s_plugin_ToDoLists_edit_task = 'Éditer la tâche';
+$s_plugin_ToDoLists_enter_new_description = 'Entrer une nouvelle description de la tâche (120 caractères max):';
+$s_plugin_ToDoLists_delete_task = 'Supprimer la tâche';
+$s_plugin_ToDoLists_confirm_deletion = 'Êtes vous sûr de vouloir annuler la tâche en cours de création?';
+
+$s_plugin_ToDoLists_task_created = 'Tâche créée';
+$s_plugin_ToDoLists_task_updated = 'Tâche mise à jour';
