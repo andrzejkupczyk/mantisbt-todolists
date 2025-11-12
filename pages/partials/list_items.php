@@ -12,7 +12,7 @@ if (!empty($tasks)): ?>
                 <?php if ($canManage): ?>
                   hx-post="<?= plugin_api_url('tasks') ?>"
                   hx-headers='{"x-http-method-override": "put"}'
-                  hx-vals='<?= json_encode(array_merge($task, ['finished' => !$task['finished']])) ?>'
+                  hx-vals='<?= htmlspecialchars(json_encode(array_merge($task, ['finished' => !$task['finished']]), ENT_QUOTES)) ?>'
                 <?php endif ?>
             >
                 <?= $task['descriptionHtml'] ?>
@@ -25,8 +25,8 @@ if (!empty($tasks)): ?>
                   title="<?= plugin_lang_get('edit_task') ?>"
                   hx-post="<?= plugin_api_url('tasks') ?>"
                   hx-headers='{"x-http-method-override": "put"}'
-                  hx-vals='<?= json_encode($task) ?>'
-                  hx-prompt="<?= $task['description'] . "\n\n" . plugin_lang_get('enter_new_description') ?>"
+                  hx-vals='<?= htmlspecialchars(json_encode($task, ENT_QUOTES)) ?>'
+                  hx-prompt="<?= htmlspecialchars($task['description']) . "\n\n" . plugin_lang_get('enter_new_description') ?>"
                 >
                     <i class="fa fa-pencil"></i>
                 </a>
@@ -35,9 +35,9 @@ if (!empty($tasks)): ?>
                   title="<?= plugin_lang_get('delete_task') ?>"
                   hx-post="<?= plugin_api_url('tasks') ?>"
                   hx-headers='{"x-http-method-override": "delete"}'
-                  hx-vals='<?= json_encode($task) ?>'
+                  hx-vals='<?= htmlspecialchars(json_encode($task, ENT_QUOTES)) ?>'
                     <?php if (!$task['finished']): ?>
-                      hx-confirm="<?= $task['description'] . "\n\n" . plugin_lang_get('confirm_deletion') ?>"
+                      hx-confirm="<?= htmlspecialchars($task['description']) . "\n\n" . plugin_lang_get('confirm_deletion') ?>"
                     <?php endif ?>
                 >
                     <i class="fa fa-trash"></i>
