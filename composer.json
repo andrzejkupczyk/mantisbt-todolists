@@ -25,25 +25,28 @@
         }
     ],
     "require": {
-        "php": "^7.0 || ^8.0",
+        "php": "^8.0",
         "ext-json": "*",
-        "composer/installers": "~1.0",
+        "composer/installers": "^2.3.0",
         "webgarden/mantisbt-termite": "^1.0"
     },
     "require-dev": {
         "mantisbt/mantisbt": "dev-master",
-        "phpstan/phpstan": "1.9.x-dev"
+        "phpstan/phpstan": "2.1.31"
     },
     "autoload": {
         "psr-4": {
             "WebGarden\\ToDoLists\\": "src"
         }
     },
+    "scripts": {
+        "analyse": "phpstan analyse"
+    },
     "config": {
         "optimize-autoloader": true,
         "sort-packages": true,
         "platform": {
-            "php": "7.0.0"
+            "php": "8.0.0"
         },
         "allow-plugins": {
             "composer/installers": true
