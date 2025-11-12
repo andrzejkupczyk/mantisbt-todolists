@@ -116,7 +116,7 @@ class TasksRepository
         $task['finished'] = in_array($task['finished'], ['t', '1']);
         $task['descriptionHtml'] = mention_format_text(
             class_exists(MantisMarkdown::class)
-                ? MantisMarkdown::convert_line($task['description'])
+                ? MantisMarkdown::instance()->convert($task['description'])
                 : $task['description']
         );
 
